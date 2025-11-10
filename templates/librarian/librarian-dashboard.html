@@ -1,0 +1,345 @@
+{% extends 'librarian_layout.html' %}
+
+{% block title %}Librarian - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="flex-1 p-8">
+    <div class="flex flex-col gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-[#111a22] rounded-xl p-6">
+                <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-1">Manage Book
+                    Subcategories</h2>
+                <p class="text-[#92adc9] text-base font-normal leading-normal pb-6">Add new subcategories to the
+                    main book categories.</p>
+                <form method="post" id="add-subcategory-form" action="{% url 'books-subcategory' %}">
+                    {% csrf_token %}
+                    <div class="flex flex-col gap-4">
+                        <label class="flex flex-col">
+                            <p class="text-white text-base font-medium leading-normal pb-2">Select Main Category</p>
+                            <select
+                                class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#324d67] bg-[#192633] focus:border-primary h-14 placeholder:text-[#92adc9] p-[15px] text-base font-normal leading-normal appearance-none bg-no-repeat bg-right"
+                                style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(146,173,201)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e'); background-position: right 1rem center; background-size: 1.5em 1.5em;" name="category" id="subcategory-catSelect">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label class="flex flex-col">
+                            <p class="text-white text-base font-medium leading-normal pb-2">New Subcategory Name</p>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#324d67] bg-[#192633] focus:border-primary h-14 placeholder:text-[#92adc9] p-[15px] text-base font-normal leading-normal"
+                                placeholder="e.g. Sci-Fi" type="text" name="name" />
+                        </label>
+                        <button
+                            type="submit" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] self-start mt-2">
+                            <span class="truncate">Add Subcategory</span>
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-6">
+                    <h3 class="text-white text-lg font-semibold leading-tight tracking-[-0.015em] pb-3">Existing
+                        Subcategories for <span id="subcategory-category"></span></h3>
+                    <ul id="subcategory-list" class="flex flex-wrap gap-2">
+                    
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-[#111a22] rounded-xl p-6">
+                <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-1">Add Trending
+                    Books</h2>
+                <p class="text-[#92adc9] text-base font-normal leading-normal pb-6">Search for a book by title
+                    or ISBN to add it to the trending list.</p>
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-white text-base font-medium leading-normal pb-2">Search for a Book</p>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#92adc9]">search</span>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#324d67] bg-[#192633] focus:border-primary h-14 placeholder:text-[#92adc9] pl-12 pr-4 py-[15px] text-base font-normal leading-normal"
+                                placeholder="Search by title or ISBN..." type="text" id="book-search-input" />
+                        </div>
+                    </label>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-white text-lg font-semibold leading-tight tracking-[-0.015em] pb-3" id="book-search-results-title"></h3>
+                    <div class="flex flex-col gap-3" id="book-search-results"></div>
+                </div>
+            </div>
+        </div>
+        <div class="px-8 py-8">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em]">Current Trending Books</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for book in trending_books %}
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for {{ book.title }}"
+                style='background-image: url("{{ book.cover_image.url }}");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">{{ book.title }}</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">{{ book.author }}</p>
+              </div>
+              <a href="{{ book.pdf_link.url }}" target="_blank"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Read Now</span>
+              </a>
+            </div>
+            {% empty %}
+            <p class="text-slate-400 col-span-full text-center">There are no trending books at the moment.</p>
+            {% endfor %}
+            
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+    const addSubcategoryForm = document.getElementById('add-subcategory-form');
+    const subcategoryCategorySelect = document.getElementById('subcategory-catSelect');
+    const subcategoryCategoryNameSpan = document.getElementById('subcategory-category');
+    const subcategoryList = document.getElementById('subcategory-list');
+
+    function updateCategoryName() {
+        if (subcategoryCategorySelect && subcategoryCategoryNameSpan) {
+            const selectedOption = subcategoryCategorySelect.options[subcategoryCategorySelect.selectedIndex];
+            if (selectedOption) {
+                subcategoryCategoryNameSpan.textContent = selectedOption.text;
+            }
+        }
+    }
+
+    function updateSubcategoryList() {
+        if (subcategoryCategorySelect && subcategoryList) {
+            const selectedOption = subcategoryCategorySelect.options[subcategoryCategorySelect.selectedIndex];
+            if (selectedOption) {
+                const category_id = selectedOption.value;
+                fetch(`/books/subcategory/?category=${category_id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        subcategoryList.innerHTML = '';
+                        data.forEach(subcategory => {
+                            const li = document.createElement('li');
+                            li.className = 'bg-[#233648] text-white text-sm pl-3 pr-2 py-1 rounded-full flex items-center gap-1';
+
+                            li.innerHTML = `
+                                <span>${subcategory.name}</span>
+                                <button data-delete-subcategory data-subcategory-id="${subcategory.id}" class="text-[#92adc9] hover:text-white rounded-full flex items-center justify-center w-5 h-5">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                                </button>
+                            `;
+                            subcategoryList.appendChild(li);
+                        });
+                    });
+            }
+        }
+    }
+    
+
+    if (addSubcategoryForm) {
+        addSubcategoryForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const url = form.action;
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                .then(data => {
+                    if (data.status === 200) {
+                        NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                    } else {
+                        NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                    }
+                })
+                .catch(error => {
+                    NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+                });
+        });
+    }
+
+    const bookSearchInput = document.getElementById('book-search-input');
+    const bookSearchResults = document.getElementById('book-search-results');
+    const bookSearchResultsTitle = document.getElementById('book-search-results-title');
+    const addTrendingUrlTemplate = "{% url 'add-trending' 0 %}";
+    const removeTrendingUrlTemplate = "{% url 'remove-trending' 0 %}";
+    const deleteSubcategoryUrlTemplate = "{% url 'delete-subcategory' 0 %}";
+
+    if (bookSearchInput) {
+        bookSearchInput.addEventListener('input', function () {
+            const query = this.value;
+
+            if (query.length < 2) {
+                bookSearchResults.innerHTML = '';
+                bookSearchResultsTitle.textContent = '';
+                return;
+            }
+
+            bookSearchResultsTitle.textContent = '';
+            bookSearchResults.innerHTML = `
+                <div class="flex justify-center items-center p-4">
+                    <svg class="animate-spin h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+            `;
+
+            fetch(`/books/?search_books=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    bookSearchResults.innerHTML = '';
+                    if (Array.isArray(data) && data.length > 0) {
+                        bookSearchResultsTitle.textContent = `Search Results for "${query}"`;
+                        data.forEach(book => {
+                            const bookElement = document.createElement('div');
+                            bookElement.className = 'flex items-center justify-between bg-[#192633] p-3 rounded-lg';
+
+                            bookElement.innerHTML = `
+                                <div class="flex items-center gap-4">
+                                    <div class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded w-12"
+                                        style='background-image: url("../../media/${book.cover_image}");'>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-medium">${book.title}</p>
+                                        <p class="text-[#92adc9] text-sm">${book.author}</p>
+                                        <p class="text-[#92adc9] text-xs italic mt-1">${book.is_trending ? 'Trending' : ''}</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="text-[#92adc9] hover:text-white" data-add-trending data-book-id="${book.id}">
+                                        <span class="material-symbols-outlined">drag_indicator</span>
+                                    </button>
+                                    <button class="text-[#92adc9] hover:text-white" data-remove-trending data-book-id="${book.id}">
+                                        <span class="material-symbols-outlined">delete_forever</span>
+                                    </button>
+                                </div>
+                            `;
+                            bookSearchResults.appendChild(bookElement);
+                        });
+                    } else {
+                        bookSearchResults.innerHTML = '<p class="text-[#92adc9] p-3 text-center">No books found matching your search.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                    bookSearchResults.innerHTML = '<p class="text-red-500 p-3 text-center">Error fetching results.</p>';
+                });
+        });
+    }
+
+    bookSearchResults.addEventListener('click', function(event) {
+        const addBtn = event.target.closest('[data-add-trending]');
+        const removeBtn = event.target.closest('[data-remove-trending]');
+
+        const getCsrfToken = () => document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        if (addBtn) {
+            const bookId = addBtn.dataset.bookId;
+            const addTrendingUrl = addTrendingUrlTemplate.replace('0', bookId);
+
+            fetch(addTrendingUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(data => {
+                if (data.status === 200) {
+                    NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                } else {
+                    NotifyX.warning(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                }
+            })
+            .catch(error => {
+                console.error('Error adding trending:', error);
+                NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+            });
+        }
+
+        if (removeBtn) {
+            const bookId = removeBtn.dataset.bookId;
+            const removeTrendingUrl = removeTrendingUrlTemplate.replace('0', bookId);
+
+            fetch(removeTrendingUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCsrfToken(),
+                    'X-Requested-with': 'XMLHttpRequest',
+                },
+            })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(data => {
+                if (data.status === 200) {
+                    NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                } else {
+                    NotifyX.warning(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                }
+            })
+            .catch(error => {
+                console.error('Error removing trending:', error);
+                NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+            });
+        }
+    });
+
+    if (subcategoryList) {
+        subcategoryList.addEventListener('click', function(event) {
+            const deleteBtn = event.target.closest('[data-delete-subcategory]');
+            if (deleteBtn) {
+                const subcategoryId = deleteBtn.dataset.subcategoryId;
+                const deleteUrl = deleteSubcategoryUrlTemplate.replace('0', subcategoryId);
+                const getCsrfToken = () => document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCsrfToken(),
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                .then(data => {
+                    if (data.status === 200) {
+                        NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                        updateSubcategoryList(); // Refresh the list
+                    } else {
+                        NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting subcategory:', error);
+                    NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+                });
+            }
+        });
+    }
+
+    if (subcategoryCategorySelect) {
+        function handleCategoryChange() {
+            updateCategoryName();
+            updateSubcategoryList();
+        }
+
+        // Set initial values on page load
+        handleCategoryChange();
+
+        // Update values on change
+        subcategoryCategorySelect.addEventListener('change', handleCategoryChange);
+    }
+</script>
+{% endblock %}

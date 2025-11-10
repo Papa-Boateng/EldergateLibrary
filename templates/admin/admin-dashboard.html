@@ -1,0 +1,362 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Administration - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="flex h-screen">
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Main section -->
+        <div class="flex-1 p-6">
+            <!-- PageHeading -->
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+                <div class="flex min-w-72 flex-col gap-3">
+                    <p
+                        class="text-text-light dark:text-text-dark text-4xl font-black leading-tight tracking-[-0.033em]">
+                        Add a New Book to the Library</p>
+                    <p class="text-subtext-light dark:text-subtext-dark text-base font-normal leading-normal">Upload
+                        free and paid books to the library.</p>
+                </div>
+            </div>
+            <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl mt-6">
+                <div id="form-messages" class="mb-4"></div>
+                <!-- Upload Form -->
+                <form method="post" id="add-book-form" action="{% url 'books-management' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                        <!-- Left column -->
+                        <div class="flex flex-col gap-6">
+                            <!-- TextField -->
+                            <label class="flex flex-col">
+                                <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                    Book Title</p>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                    placeholder="Enter book title" value="" name="title"/>
+                                {% if error %}
+                                    <p class="text-red-500 text-center mb-6">{{ error }}</p>
+                                {% endif %}
+                            </label>
+                            <!-- TextField -->
+                            <label class="flex flex-col">
+                                <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                    Book Description</p>
+                                <textarea
+                                    class="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                    placeholder="Enter book description" value="" name="description" rows="10"></textarea>
+                                {% if error %}
+                                <p class="text-red-500 text-center mb-6">{{ error }}</p>
+                            {% endif %}
+                            </label>
+                            <!-- TextField -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        Author</p>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                        placeholder="Enter author name" value="" name="author" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        ISBN</p>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                        placeholder="Enter ISBN" value="" name="isbn" />
+                                </label>
+                            </div>
+                            <!-- TextField -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        Publisher</p>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                        placeholder="Enter publisher name" value="" name="publisher" />
+                                </label>
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        Publication Date</p>
+                                    <input
+                                        class="form-input focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent rounded-lg border-none bg-dark-primary-bg h-14 placeholder:text-gray-500 p-4 text-base font-normal leading-normal"
+                                        placeholder="Enter publication date" value="" type="date" name="publication_date"/>
+                                </label>
+                            </div>
+                            <!-- Category Selection -->
+                            <div class="grid grid-cols-1 gap-6">
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        Select Category
+                                    </p>
+                                    <select id="category-select" name="category"
+                                        class="form-select w-full min-w-0 flex-1 overflow-hidden rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4 text-base font-normal leading-normal">
+                                        <option value="">Select Category</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                        <option value="add_new_category">Add New Category</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <!-- TextField -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <label class="flex flex-col">
+                                    <p
+                                        class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                        Total Pages</p>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 placeholder:text-gray-500 p-4 pl-8 text-base font-normal leading-normal"
+                                        placeholder="Enter total pages" type="number" value="" name="total_pages"/>
+                                </label>
+                                <label class="flex flex-col">
+                                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Set
+                                        Price (USD)</p>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-text-light dark:text-text-dark">$</span>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 placeholder:text-gray-500 p-4 pl-8 text-base font-normal leading-normal"
+                                            placeholder="0.00" type="number" value="" name="price" step="0.01" />
+                                    </div>
+                                </label>
+                            </div>
+
+                        </div>
+                        <!-- Right column -->
+                        <div class="flex flex-col gap-6">
+                            <!--Image Upload-->
+                            <div class="flex flex-col">
+                                <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                    Upload Book Image</p>
+                                <div class="flex items-center justify-center w-full">
+                                    <label id="cover-image-label" for="cover_image_input"
+                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-border-light dark:border-border-dark border-dashed rounded-lg cursor-pointer bg-background-light dark:bg-background-dark hover:bg-opacity-80">
+                                        <div id="cover-image-placeholder" class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <span class="material-symbols-outlined text-subtext-light dark:text-subtext-dark text-5xl">cloud_upload</span>
+                                            <p class="mb-2 text-sm text-subtext-light dark:text-subtext-dark"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                            <p class="text-xs text-gray-500">Image (MAX. 50MB)</p>
+                                        </div>
+                                        <img id="cover-image-preview" src="#" alt="Image Preview" class="hidden w-full h-full object-contain rounded-lg"/>
+                                        <input id="cover_image_input" type="file" name="cover_image" class="hidden" accept="image/*" />
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- File Upload -->
+                            <div class="flex flex-col">
+                                <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">
+                                    Upload Book File</p>
+                                <div class="flex items-center justify-center w-full">
+                                    <label id="pdf-label" for="pdf_link_input"
+                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-border-light dark:border-border-dark border-dashed rounded-lg cursor-pointer bg-background-light dark:bg-background-dark hover:bg-opacity-80">
+                                        <div id="pdf-placeholder" class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <span class="material-symbols-outlined text-subtext-light dark:text-subtext-dark text-5xl">cloud_upload</span>
+                                            <p class="mb-2 text-sm text-subtext-light dark:text-subtext-dark"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                            <p class="text-xs text-gray-500">PDF, EPUB, or MOBI (MAX. 50MB)</p>
+                                        </div>
+                                        <div id="pdf-preview" class="hidden text-center">
+                                            <p class="text-lg font-semibold text-text-light dark:text-text-dark">Selected File:</p>
+                                            <p id="pdf-filename" class="text-sm text-subtext-light dark:text-subtext-dark"></p>
+                                        </div>
+                                        <input id="pdf_link_input" type="file" name="pdf_link" class="hidden" accept=".pdf,.epub,.mobi" />
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                class="flex w-full mt-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-4 bg-primary text-white text-lg font-bold leading-normal tracking-[0.015em]">
+                                <span class="truncate">Add Book to Library</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Recently Added Books -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4">Recently Added Books</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Book Card -->
+                    {% for item in books_with_styles %}
+                    <div class="book-card cursor-pointer gap-4 rounded-lg  p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary"
+                        data-title="{{ item.book.title }}"
+                        data-description="{{ item.book.description }}"
+                        data-author="{{ item.book.author }}"
+                        data-category="{{ item.book.category.name }}"
+                        data-publisher="{{ item.book.publisher }}"
+                        data-pubdate="{{ item.book.publication_date|date:'M d, Y' }}"
+                        data-isbn="{{ item.book.isbn }}"
+                        data-pages="{{ item.book.total_pages }}"
+                        data-cover="{{ item.book.cover_image.url }}"
+                        data-added="{{ item.book.timestamp|date:'Y-m-d' }}"
+                        data-file="{{ item.book.pdf_link.url }}">
+                        <div class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                            data-alt="Book cover for {{ item.book.title }}"
+                            style="background-image: url('{{ item.book.cover_image.url }}');">
+                        </div>
+                        <h3 class="font-bold text-text-light mt-3 dark:text-text-dark">{{ item.book.title }}</h3>
+                        <p class="text-sm text-subtext-light mt-2 dark:text-subtext-dark">{{ item.book.author }}</p>
+                        <span
+                            class="{{ item.style.class }}">{{ item.style.text }}</span>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'modals/admin/modal-category-view.html' %}
+{% include 'modals/admin/modal-book-detail.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // AJAX form submission
+        const addBookForm = document.getElementById('add-book-form');
+        if(addBookForm) {
+            addBookForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const formData = new FormData(form);
+                const url = form.action;
+
+                fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                .then(({ status, body }) => {
+                    if (status === 200) {
+                        NotifyX.success(body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                        form.reset();
+                        // Reset previews
+                        document.getElementById('cover-image-preview').classList.add('hidden');
+                        document.getElementById('cover-image-placeholder').classList.remove('hidden');
+                        document.getElementById('pdf-preview').classList.add('hidden');
+                        document.getElementById('pdf-placeholder').classList.remove('hidden');
+                    } else {
+                        NotifyX.error(body.error || 'An error occurred.', { duration: 3000, dismissible: true, theme: 'dark' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+                });
+            });
+        }
+
+        // Modal logic
+        const categorySelect = document.getElementById('category-select');
+        const categoryModal = document.getElementById('add-category-modal');
+        const categoryCancelButton = document.getElementById('cancel-category-button');
+
+        const bookDetailModal = document.getElementById('book-detail-modal');
+        const closeBookModal = document.getElementById('close-view-book-modal');
+        const bookCards = document.querySelectorAll('.book-card');
+
+
+        if (categorySelect) {
+            categorySelect.addEventListener('click', function () {
+                if (this.value === 'add_new_category') {
+                    categoryModal.classList.remove('hidden');
+                    categoryModal.classList.add('flex');
+                    this.selectedIndex = 0;
+                }
+            });
+        }
+
+        bookCards.forEach(card => {
+            card.addEventListener('click', function () {
+                // Populate modal
+                document.getElementById('modal-book-title').textContent = this.dataset.title;
+                document.getElementById('modal-book-description').textContent = this.dataset.description;
+                document.getElementById('modal-book-author').textContent = this.dataset.author;
+                document.getElementById('modal-book-category').textContent = this.dataset.category;
+                document.getElementById('modal-book-publisher').textContent = this.dataset.publisher;
+                document.getElementById('modal-book-pubdate').textContent = this.dataset.pubdate;
+                document.getElementById('modal-book-isbn').textContent = this.dataset.isbn;
+                document.getElementById('modal-book-pages').textContent = this.dataset.pages;
+                document.getElementById('modal-book-cover').src = this.dataset.cover;
+                document.getElementById('modal-book-date').textContent = this.dataset.added;
+                document.getElementById('modal-open-book-btn').href = this.dataset.file;
+
+                // Show modal
+                bookDetailModal.classList.remove('hidden');
+                bookDetailModal.classList.add('flex');
+            });
+        });
+
+        function closeModal(modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+
+        if (categoryCancelButton) {
+            categoryCancelButton.addEventListener('click', function () {
+                closeModal(categoryModal);
+            });
+        }
+
+        if (closeBookModal) {
+            closeBookModal.addEventListener('click', function () {
+                closeModal(bookDetailModal);
+            });
+        }
+
+        window.addEventListener('click', function (event) {
+            if (event.target === categoryModal) {
+                closeModal(categoryModal);
+            } else if (event.target === bookDetailModal) {
+                closeModal(bookDetailModal);
+            }
+        });
+
+        // File preview logic
+        const coverImageInput = document.getElementById('cover_image_input');
+        const coverImagePreview = document.getElementById('cover-image-preview');
+        const coverImagePlaceholder = document.getElementById('cover-image-placeholder');
+
+        const pdfInput = document.getElementById('pdf_link_input');
+        const pdfPreview = document.getElementById('pdf-preview');
+        const pdfPlaceholder = document.getElementById('pdf-placeholder');
+        const pdfFilename = document.getElementById('pdf-filename');
+
+        if (coverImageInput) {
+            coverImageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        coverImagePreview.src = e.target.result;
+                        coverImagePreview.classList.remove('hidden');
+                        coverImagePlaceholder.classList.add('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        if (pdfInput) {
+            pdfInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    pdfFilename.textContent = file.name;
+                    pdfPreview.classList.remove('hidden');
+                    pdfPlaceholder.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

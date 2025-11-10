@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}Eldergate Library{% endblock %}</title>
+    <!-- Include NotifyX CDN -->
+    <script src="https://unpkg.com/notifyx@latest/dist/notifyx.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/notifyx@latest/dist/notifyx.min.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#1173d4", "background-light": "#f6f7f8", "background-dark": "#101922", "card-light": "#FFFFFF", "card-dark": "#1E1E1E", "text-light": "#212529", "text-dark": "#E9ECEF", "subtext-light": "#6C757D", "subtext-dark": "#ADB5BD", "border-light": "#E9ECEF", "border-dark": "#343A40"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex h-screen">
+        {% include 'includes/librarian-panel.html' %}
+        <main class="flex-1 p-8 overflow-y-auto">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuLinks = document.querySelectorAll('#menu-links a');
+            const currentPath = window.location.pathname;
+
+            menuLinks.forEach(link => {
+                // Define active and inactive classes
+                const activeClasses = ['bg-primary/10', 'text-text-dark', 'font-semibold'];
+                const inactiveClasses = ['text-subtext-light', 'dark:text-subtext-dark', 'hover:bg-primary/10', 'hover:text-primary'];
+
+                // Reset all links to inactive state first
+                link.classList.remove(...activeClasses);
+                link.classList.add(...inactiveClasses);
+
+                // Check if the link's href matches the current path
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.remove(...inactiveClasses);
+                    link.classList.add(...activeClasses);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

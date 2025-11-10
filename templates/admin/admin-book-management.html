@@ -1,0 +1,290 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Administration - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-10 md:px-20 py-10 flex-1">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+          <div class="flex min-w-72 flex-col gap-2">
+            <p class="text-subtext-light dark:text-subtext-dark text-base font-normal leading-normal">Total Number of Books: {{ total_books }}</p>
+          </div>
+          <a href="{% url 'admin-dashboard' %}"
+            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+            <span class="truncate">Add New Book</span>
+          </a>
+        </div>
+        <div class="mb-6">
+          <label class="flex flex-col min-w-40 h-12 w-full">
+            <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+              <div
+                class="text-gray-400 dark:text-[#92adc9] flex border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#233648] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                data-icon="MagnifyingGlass">
+                <span class="material-symbols-outlined">search</span>
+              </div>
+              <input
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary h-full placeholder:text-gray-400 dark:placeholder:text-[#92adc9] px-4 text-base font-normal leading-normal border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#233648] border-l-0"
+                placeholder="Search by title or author" value="" />
+            </div>
+          </label>
+        </div>
+        <div class="overflow-x-auto">
+          <div
+            class="flex overflow-hidden rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]">
+            <table class="flex-1 w-full">
+              <thead>
+                <tr class="bg-gray-50 dark:bg-[#192633]">
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                    Book Cover</th>
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider w-1/3">
+                    Title</th>
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                    Author</th>
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                    Category</th>
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                    Type</th>
+                  <th
+                    class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                    Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in book_list_styles %}
+                <tr class="border-t border-gray-200 dark:border-t-[#324d67]">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded w-10"
+                      data-alt="The Midnight Library book cover"
+                      style='background-image: url("{{ item.book.cover_image.url }}");'>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ item.book.title }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-[#92adc9]">{{ item.book.author }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="{{ item.category_class }}">{{ item.book.category.name }}</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class="{{ item.style.class }}">{{ item.style.text }}</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div class="flex items-center gap-4">
+                      <a class="text-primary hover:text-primary/80" href="#" data-edit-book-btn
+                          data-book-id="{{ item.book.id }}" data-edit-book-url="{% url 'edit-book' item.book.id %}"><span
+                          class="material-symbols-outlined text-xl">edit</span></a>
+                      <a class="text-red-600 hover:text-red-800 dark:text-red-500 dark:hover:text-red-400"
+                        href="#" data-delete-book-btn data-book-id="{{ item.book.id }}" data-delete-book-url="{% url 'delete-book' item.book.id %}"><span class="material-symbols-outlined text-xl">delete</span></a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="flex items-center justify-center p-4 mt-4">
+          <a class="flex size-10 items-center justify-center text-gray-500 dark:text-white" href="#">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </a>
+          <a class="text-sm font-bold leading-normal tracking-[0.015em] flex size-10 items-center justify-center text-white rounded-full bg-primary"
+            href="#">1</a>
+          <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-[#233648]"
+            href="#">2</a>
+          <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-[#233648]"
+            href="#">3</a>
+          <span
+            class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full">...</span>
+          <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-[#233648]"
+            href="#">8</a>
+          <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-[#233648]"
+            href="#">9</a>
+          <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-gray-700 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-[#233648]"
+            href="#">10</a>
+          <a class="flex size-10 items-center justify-center text-gray-500 dark:text-white" href="#">
+            <span class="material-symbols-outlined">chevron_right</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'modals/admin/modal-edit-book.html' %}
+{% include 'modals/admin/modal-delete-book.html' %}
+
+<script>
+  const editBookBtns = document.querySelectorAll(`[data-edit-book-btn]`);
+  const deleteBookBtns = document.querySelectorAll(`[data-delete-book-btn]`);
+  const editBookModal = document.getElementById('edit-book-modal');
+  const deleteBookModal = document.getElementById('delete-book-modal');
+  const closeEditBookModal = document.getElementById('close-edit-book-modal');
+  const closeDeleteBookModal = document.getElementById('close-delete-book-modal');
+  const cancelEditBookBtn = document.getElementById('cancel-edit-book-button');
+  const cancelDeleteBookBtn = document.getElementById('cancel-delete-button');
+  const editBookForm = document.getElementById('edit-book-form');
+  const deleteBookForm = document.getElementById('delete-book-form');
+
+  editBookBtns.forEach(btn => {
+    btn.addEventListener('click', function (event) {
+      const editBookUrl = event.currentTarget.dataset.editBookUrl;
+
+      fetch(editBookUrl)
+        .then(response => response.json())
+        .then(data => {
+          const editBookForm = document.getElementById('edit-book-form');
+          editBookForm.action = editBookUrl;
+
+          document.getElementById('edit-book-title').value = data.title;
+          document.getElementById('edit-book-description').value = data.description;
+          document.getElementById('edit-book-author').value = data.author;
+          document.getElementById('edit-book-isbn').value = data.isbn;
+          document.getElementById('edit-book-publisher').value = data.publisher;
+          document.getElementById('edit-book-publication_date').value = data.publication_date;
+          document.getElementById('edit-book-total_pages').value = data.pages;
+          document.getElementById('edit-book-price').value = data.price;
+
+          const categorySelect = document.getElementById('edit-book-category');
+          categorySelect.value = data.category_id;
+
+          const imagePreview = document.getElementById('edit-cover-image-preview');
+          imagePreview.src = data.cover ? data.cover : '#';
+
+          const pdfFilename = document.getElementById('edit-pdf-filename');
+          pdfFilename.textContent = data.file ? data.file.split('/').pop() : 'No file uploaded';
+
+          editBookModal.classList.remove('hidden');
+          editBookModal.classList.add('flex');
+        })
+        .catch(error => {
+          console.error('Error fetching book details:', error);
+          NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+        });
+    });
+  });
+
+  deleteBookBtns.forEach(btn => {
+    btn.addEventListener('click', function (event) {
+      const deleteBookUrl = event.currentTarget.dataset.deleteBookUrl;
+
+      fetch(deleteBookUrl)
+        .then(response => response.json())
+        .then(data => {
+          const deleteBookForm = document.getElementById('delete-book-form');
+          deleteBookForm.action = deleteBookUrl;
+
+          document.getElementById('delete-book-title').innerHTML = data.title;
+          
+          deleteBookModal.classList.remove('hidden');
+          deleteBookModal.classList.add('flex');
+        })
+        
+    });
+  });
+
+  if(editBookForm) {
+    editBookForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const url = form.action;
+
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then(response => response.json().then(data => ({ status: response.status, body: data })))
+      .then(data => {
+        if (data.status === 200) {
+          closeModal(editBookModal);
+          NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+        } else {
+          NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+        }
+      })
+      .catch(error => {
+        NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+      });
+    });
+  }
+  
+  if (deleteBookForm) {
+    deleteBookForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const url = form.action;
+
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then(response => response.json().then(data => ({ status: response.status, body: data })))
+      .then(data => {
+        if (data.status === 200) {
+          closeModal(deleteBookModal);
+          NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+        } else {
+          NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+        }
+      })
+      .catch(error => {
+        NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+      });
+    });
+  }
+
+  function closeModal(modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  if (closeEditBookModal) {
+    closeEditBookModal.addEventListener('click', function (event) {
+      closeModal(editBookModal);
+    });
+  }
+  if (cancelEditBookBtn) {
+    cancelEditBookBtn.addEventListener('click', function (event) {
+      closeModal(editBookModal);
+    });
+  }
+  if (closeDeleteBookModal) {
+    closeDeleteBookModal.addEventListener('click', function (event) {
+      closeModal(deleteBookModal);
+    });
+  }
+  if (cancelDeleteBookBtn) {
+    cancelDeleteBookBtn.addEventListener('click', function (event) {
+      closeModal(deleteBookModal);
+    });
+  }
+
+
+  window.addEventListener('click', function (event) {
+    if (event.target === editBookModal) {
+      closeModal(editBookModal);
+    } else if (event.target === deleteBookModal) {
+      closeModal(deleteBookModal);
+    }
+  });
+</script>
+{% endblock %}

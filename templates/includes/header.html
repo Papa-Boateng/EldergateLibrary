@@ -1,0 +1,40 @@
+<header class="flex justify-between items-center mb-8">
+    <div>
+        <h2 class="text-3xl font-bold text-text-light dark:text-text-dark">{{ title }}</h2>
+        <p class="text-subtext-light dark:text-subtext-dark">{{ subtitle }}</p>
+    </div>
+    <div class="flex items-center space-x-4">
+        <span class="material-icons text-subtext-light dark:text-subtext-dark cursor-pointer">notifications</span>
+        <div class="flex items-center space-x-2">
+            <img alt="{{ user.First_Name }}'s profile picture" class="w-10 h-10 rounded-full" src="https://static.vecteezy.com/system/resources/previews/018/765/757/non_2x/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg"/>
+            <div>
+                <p class="font-semibold text-text-light dark:text-text-dark">{{ user.First_Name }} {{ user.Last_Name }}</p>
+                <p class="text-sm text-subtext-light dark:text-subtext-dark">{{ user.model_name }}</p>
+            </div>
+            <div class="relative inline-block text-left">
+                <button type="button" class="flex items-center focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                    <span class="material-icons text-subtext-light dark:text-subtext-dark cursor-pointer">expand_more</span>
+                </button>
+                <div id="profile-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-card-light dark:bg-card-dark ring-1 ring-black ring-opacity-5 focus:outline-none hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                    <div class="py-1" role="none">
+                        <a href="{% url 'profile-edit' %}" class="text-text-light dark:text-text-dark block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Profile</a>
+                        <a href="{% url 'logout' %}" class="text-text-light dark:text-text-dark block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.getElementById('menu-button').addEventListener('click', function() {
+        var menu = document.getElementById('profile-menu');
+        menu.classList.toggle('hidden');
+    });
+
+    window.addEventListener('click', function(e) {
+        if (!document.getElementById('menu-button').contains(e.target) && !document.getElementById('profile-menu').contains(e.target)){
+            document.getElementById('profile-menu').classList.add('hidden');
+        }
+    });
+</script>

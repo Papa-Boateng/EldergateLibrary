@@ -1,0 +1,49 @@
+<!-- Add Librarian Modal -->
+<div id="add-librarian-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="relative rounded-lg bg-card-light dark:bg-card-dark p-8 shadow-lg w-full max-w-md">
+        <!-- Close button -->
+        <button id="close-add-librarian-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-6">Add New Librarian</h2>
+
+        <form id="add-librarian-form" method="post" action="{% url 'admin-add-librarian' %}">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 gap-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">First Name</p>
+                        <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="text" name="First_Name" required />
+                    </label>
+                    <label class="flex flex-col">
+                        <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Last Name</p>
+                        <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="text" name="Last_Name" required />
+                    </label>
+                </div>
+                <label class="flex flex-col">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Username</p>
+                    <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="text" name="username" />
+                </label>
+                <label class="flex flex-col">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Email</p>
+                    <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="email" name="email" />
+                </label>
+                <label class="flex flex-col">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Password</p>
+                    <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="password" name="password" required />
+                </label>
+                <label class="flex flex-col">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Confirm Password</p>
+                    <input class="form-input rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-14 p-4" type="password" name="password_confirm" required />
+                </label>
+
+            </div>
+
+            <div class="flex justify-end space-x-4 mt-8">
+                <button type="button" id="cancel-add-librarian-button" class="rounded-lg bg-gray-200 dark:bg-gray-600 px-4 py-2 text-text-light dark:text-text-dark">Cancel</button>
+                <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-white">Add Librarian</button>
+            </div>
+        </form>
+    </div>
+</div>

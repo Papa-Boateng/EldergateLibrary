@@ -1,0 +1,327 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Administration - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="flex min-h-screen">
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- PageHeading -->
+            <div class="flex flex-wrap justify-between gap-3 items-center mb-6">
+                <div class="flex min-w-72 flex-col gap-3">
+                  
+                </div>
+                <button id="add-librarian-btn"
+                    class="flex items-center justify-center gap-2 min-w-[84px] max-w-[480px] cursor-pointer overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="material-symbols-outlined">add</span>
+                    <span class="truncate">Add New Librarian</span>
+                </button>
+            </div>
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-[#111a22] border-gray-200 dark:border-[#324d67]">
+                    <p class="text-base font-medium leading-normal text-gray-700 dark:text-white">Total Librarians
+                    </p>
+                    <p class="tracking-light text-3xl font-bold leading-tight text-[#111a22] dark:text-white">{{ num_librarians }}
+                    </p>
+                </div>
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-lg p-6 border bg-white dark:bg-[#111a22] border-gray-200 dark:border-[#324d67]">
+                    <p class="text-base font-medium leading-normal text-gray-700 dark:text-white">Total Readers</p>
+                    <p class="tracking-light text-3xl font-bold leading-tight text-[#111a22] dark:text-white">{{ num_users }}
+                    </p>
+                </div>
+            </div>
+            <!-- Librarians Section -->
+            <div class="bg-white dark:bg-[#111a22] rounded-xl shadow-md p-6 mb-8">
+                <h2
+                    class="text-2xl font-bold leading-tight tracking-[-0.015em] mb-4 text-[#111a22] dark:text-white">
+                    Librarians (Moderators)</h2>
+                <!-- SearchBar -->
+                <div class="py-3 mb-4">
+                    <label class="flex flex-col min-w-40 h-12 w-full max-w-sm">
+                        <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                            <div
+                                class="text-gray-400 dark:text-[#92adc9] flex border border-gray-300 dark:border-[#324d67] bg-gray-50 dark:bg-[#233648] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-[#111a22] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary h-full placeholder:text-gray-400 dark:placeholder:text-[#92adc9] px-4 text-base font-normal leading-normal border-gray-300 dark:border-[#324d67] bg-gray-50 dark:bg-[#233648] focus:border-primary"
+                                placeholder="Search by name or email" value="" />
+                        </div>
+                    </label>
+                </div>
+                <!-- Librarians Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#233648] dark:text-gray-400">
+                            <tr>
+                                <th class="px-6 py-3" scope="col">Name</th>
+                                <th class="px-6 py-3" scope="col">Email</th>
+                                <th class="px-6 py-3" scope="col">Date Joined</th>
+                                <th class="px-6 py-3" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in all_librarians %}
+                            <tr class="bg-white border-b dark:bg-[#111a22] dark:border-gray-700">
+                                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    scope="row">{{ user.First_Name }} {{ user.Last_Name }}</th>
+                                <td class="px-6 py-4">{{ user.email }}</td>
+                                <td class="px-6 py-4">{{ user.date_joined }}</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <button class="text-primary hover:underline" data-edit-librarian-btn data-librarian-id="{{ user.id }}" data-edit-librarian-url="{% url 'admin-edit-librarian' user.id %}">Edit</button>
+                                    <button class="text-red-500 hover:underline" data-delete-librarian-btn data-librarian-id="{{ user.id }}" data-delete-librarian-url="{% url 'admin-delete-librarian' user.id %}">Remove</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Readers Section -->
+            <div class="bg-white dark:bg-[#111a22] rounded-xl shadow-md p-6">
+                <h2
+                    class="text-2xl font-bold leading-tight tracking-[-0.015em] mb-4 text-[#111a22] dark:text-white">
+                    Readers</h2>
+                <!-- Readers Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#233648] dark:text-gray-400">
+                            <tr>
+                                <th class="px-6 py-3" scope="col">Name</th>
+                                <th class="px-6 py-3" scope="col">Email</th>
+                                <th class="px-6 py-3" scope="col">Date Joined</th>
+                                <th class="px-6 py-3" scope="col">Last Login</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in all_users %}
+                            <tr class="bg-white border-b dark:bg-[#111a22] dark:border-gray-700">
+                                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    scope="row">{{ user.First_Name }} {{ user.Last_Name }}</th>
+                                <td class="px-6 py-4">{{ user.email }}</td>
+                                <td class="px-6 py-4">{{ user.date_joined }}</td>
+                                <td class="px-6 py-4">{{ user.last_login }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% include 'modals/admin/modal-add-librarian.html' %}
+{% include 'modals/admin/modal-edit-librarian.html' %}
+{% include 'modals/admin/modal-delete-librarian.html' %}
+
+<script>
+    const addLibrarianBtn = document.getElementById('add-librarian-btn');
+    const addLibrarianModal = document.getElementById('add-librarian-modal');
+    const closeAddLibrarianModal = document.getElementById('close-add-librarian-modal');
+    const cancelAddLibrarianBtn = document.getElementById('cancel-add-librarian-button');
+    const addLibrarianForm = document.getElementById('add-librarian-form');
+
+    const editLibrarianBtn = document.querySelectorAll('[data-edit-librarian-btn]');
+    const editLibrarianModal = document.getElementById('edit-librarian-modal');
+    const closeEditLibrarianModal = document.getElementById('close-edit-librarian-modal');
+    const cancelEditLibrarianBtn = document.getElementById('cancel-edit-librarian-button');
+    const editLibrarianForm = document.getElementById('edit-librarian-form');
+
+    const deleteLibrarianBtn = document.querySelectorAll('[data-delete-librarian-btn]');
+    const deleteLibrarianModal = document.getElementById('delete-librarian-modal');
+    const closeDeleteLibrarianModal = document.getElementById('close-delete-librarian-modal');
+    const cancelDeleteLibrarianBtn = document.getElementById('cancel-delete-librarian-button');
+    const deleteLibrarianForm = document.getElementById('delete-librarian-form');
+
+    if(addLibrarianForm) {
+      addLibrarianForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const url = form.action;
+
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(data => {
+          if (data.status === 200) {
+            closeModal(addLibrarianModal);
+            NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+          } else {
+            NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+          }
+        })
+        .catch(error => {
+          NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+        });
+      });
+    }
+
+    function closeModal(modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function showModal(modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    
+    addLibrarianBtn.addEventListener('click', function() {
+        showModal(addLibrarianModal);
+    });
+
+    closeAddLibrarianModal.addEventListener('click', function() {
+        closeModal(addLibrarianModal);
+    });
+
+    cancelAddLibrarianBtn.addEventListener('click', function() {
+        closeModal(addLibrarianModal);
+    });
+
+    editLibrarianBtn.forEach(btn => {
+        btn.addEventListener('click', function (event) {
+          const editLibrarianUrl = event.currentTarget.dataset.editLibrarianUrl;
+
+          fetch(editLibrarianUrl)
+            .then(response => response.json())
+            .then(data => {
+              editLibrarianForm.action = editLibrarianUrl;
+
+              document.getElementById('edit-librarian-first-name').value = data.First_Name;
+              document.getElementById('edit-librarian-last-name').value = data.Last_Name;
+              document.getElementById('edit-librarian-username').value = data.username;
+              document.getElementById('edit-librarian-email').value = data.email;
+            
+              showModal(editLibrarianModal);
+            })
+            .catch(error => {
+              NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+            });
+        });
+    });
+
+    if(editLibrarianForm) {
+      editLibrarianForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const url = form.action;
+
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(data => {
+          if (data.status === 200) {
+            closeModal(editLibrarianModal);
+            NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+          } else {
+            NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+          }
+        })
+        .catch(error => {
+          NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+        });
+      });
+    }
+
+    closeEditLibrarianModal.addEventListener('click', function() {
+        closeModal(editLibrarianModal);
+    });
+
+    cancelEditLibrarianBtn.addEventListener('click', function() {
+        closeModal(editLibrarianModal);
+    });
+
+    deleteLibrarianBtn.forEach(btn => {
+        btn.addEventListener('click', function (event) {
+          const deleteLibrarianUrl = event.currentTarget.dataset.deleteLibrarianUrl;
+
+          fetch(deleteLibrarianUrl)
+            .then(response => response.json())
+            .then(data => {
+              deleteLibrarianForm.action = deleteLibrarianUrl;
+
+              document.getElementById('delete-librarian-name').innerHTML = data.name;
+            
+              showModal(deleteLibrarianModal);
+            })
+            .catch(error => {
+              NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+            });
+        });
+    });
+
+    if(deleteLibrarianForm) {
+      deleteLibrarianForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const url = form.action;
+
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(data => {
+          if (data.status === 200) {
+            closeModal(deleteLibrarianModal);
+            NotifyX.success(data.body.message, { duration: 3000, dismissible: true, theme: 'dark' });
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+          } else {
+            NotifyX.error(data.body.error, { duration: 3000, dismissible: true, theme: 'dark' });
+          }
+        })
+        .catch(error => {
+          NotifyX.error('An unexpected error occurred. Please try again.', { duration: 3000, dismissible: true, theme: 'dark' });
+        });
+      });
+    }
+
+    closeDeleteLibrarianModal.addEventListener('click', function() {
+        closeModal(deleteLibrarianModal);
+    });
+
+    cancelDeleteLibrarianBtn.addEventListener('click', function() {
+        closeModal(deleteLibrarianModal);
+    });
+
+
+
+</script>
+
+{% endblock %}

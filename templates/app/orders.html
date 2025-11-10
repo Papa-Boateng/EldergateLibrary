@@ -1,0 +1,197 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard - Eldergate Library{% endblock %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          
+          
+            <div class="flex flex-col md:flex-row gap-4 mb-8">
+              <div class="flex-1">
+                <label class="flex flex-col min-w-40 h-12 w-full">
+                  <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                    <div
+                      class="text-[#92adc9] flex border-none bg-[#233648] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                      <span class="material-symbols-outlined" style="font-size: 24px;">search</span>
+                    </div>
+                    <input
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-white focus:outline-0 focus:ring-0 border-none bg-[#233648] focus:border-none h-full placeholder:text-[#92adc9] px-4 text-base font-normal leading-normal"
+                      placeholder="Search your books by title or author" value="" />
+                  </div>
+                </label>
+              </div>
+              <div class="flex gap-3 overflow-x-auto">
+                <select
+                  class="form-select rounded-lg bg-card-dark border-border-dark text-slate-50 text-sm focus:ring-primary focus:border-primary">
+                  <option>Filter by Category</option>
+                  {% for category in filter_category %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+                <select
+                  class="form-select rounded-lg bg-card-dark border-border-dark text-slate-50 text-sm focus:ring-primary focus:border-primary">
+                  <option>Sort by</option>
+                  <option>Title</option>
+                  <option>Author</option>
+                  <option>Date Added</option>
+                </select>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-white">
+                <thead class="border-b border-[#233648] text-xs uppercase text-[#92adc9]">
+                  <tr>
+                    <th class="px-6 py-3" scope="col">Order ID</th>
+                    <th class="px-6 py-3" scope="col">Order Date</th>
+                    <th class="px-6 py-3" scope="col">Total Price</th>
+                    <th class="px-6 py-3" scope="col">Payment Method</th>
+                    <th class="px-6 py-3" scope="col">Book Preview</th>
+                    <th class="px-6 py-3" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8347K</td>
+                    <td class="px-6 py-4">May 15, 2024</td>
+                    <td class="px-6 py-4">$14.99</td>
+                    <td class="px-6 py-4">Visa **** 1234</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIltB6ynhgqo1mpHvLni23GXjVznG8bdupEIfrEDlZnnSTKNbZ1TQ8um2bc83sXocMgH2RriSC-7EcNP-RZvvURMZ2Am6Nl2Dv3SsZRUv9qofdLEfkWR9DK7VXMYtti47atfWqlW90K4nK8_zrM6iPK6kILWeYrsy0hyF-jox0UVBIz8c18vCXvc090q18UGNTlbJhd5EHXizcwt2v4YnTkvxVIsLOpj4oKwdhOADxu9t0XXXz11AY8ap11ethXqDke3c4sSoYTpks");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">The Midnight Library</p>
+                          <p class="text-sm text-[#92adc9]">Matt Haig</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8346J</td>
+                    <td class="px-6 py-4">April 22, 2024</td>
+                    <td class="px-6 py-4">$12.50</td>
+                    <td class="px-6 py-4">Mastercard **** 5678</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIbfV545Dpx3N8EmdLyGnAvt2aOcg7FNMtbdRwAe7uVFlzChDfEl6zf2DQ0fIgvwx-0EzAyjnfyFa0lXuj12X9-SsHvCWuiLviWher1cTISqfB6zPaq0CuO3syS4Nyxh4GjwEpA--X0AwYHkTCvYIbI75v-PZzjEG9I0FOFyQV0kWvxFKPutgTeHGkL9BjOLxFa3g8xk_6GXi0owhDw447Yc2Rs9Pv0_a40HH5yrdBzqspXR-BsJJxYRw3og6PJU9v0BP1uUGS6GPH");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">Project Hail Mary</p>
+                          <p class="text-sm text-[#92adc9]">Andy Weir</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8345I</td>
+                    <td class="px-6 py-4">March 10, 2024</td>
+                    <td class="px-6 py-4">$11.99</td>
+                    <td class="px-6 py-4">Visa **** 1234</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATv5p5jEmKLjqLjgPRSWfD-EW6lloxOfzQ_LQUC8WNaIOxZwactuZA_GBjDo2CbgBAmn88SW11zQ0RnYItXdSMbP4odxrFLsXsFLyN40_tD2ssFxlg49eEgI5_we10fxXMgXuD9d4t7-ov2XujAcfufhpSGD9VDR3840bN-G1UISrs5bGHMusMa94EVL2kzKbcj5rcQM7QXPsaSk3mDC7wLISRQU5cjSgZ5pdyOXY49rQ3rO2E8NSxklBTx9H1yVu3e06Qbjnp9RPv");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">Klara and the Sun</p>
+                          <p class="text-sm text-[#92adc9]">Kazuo Ishiguro</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8344H</td>
+                    <td class="px-6 py-4">February 28, 2024</td>
+                    <td class="px-6 py-4">$13.75</td>
+                    <td class="px-6 py-4">PayPal</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjG-AwJROxmIAVz9sAaMpYPnlhMvOAVd5pT9rN0bE-yu7EUIABBMMNWo5H5zPq7q_zrYoeuQT9dB8jWCobOXnOjcmxXEaKHPd-mJta-GkwSHbHbwoE6iqy0DburiNBqxfM6oVxHUGq9B7nA9MqdR3Go9Pv2dn0MiubgyBeF14xCCcTCvaCmNwhEp4RJXuYrFua-pKQbLBwwoNU_w8YN3GOsV5D1egv5tMAgJyVAH1y5U0Q_Y5Wo2HS8_2jCTHDLpX6OdNpDPUJpj-c");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">The Four Winds</p>
+                          <p class="text-sm text-[#92adc9]">Kristin Hannah</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8343G</td>
+                    <td class="px-6 py-4">January 19, 2024</td>
+                    <td class="px-6 py-4">$15.00</td>
+                    <td class="px-6 py-4">Mastercard **** 5678</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBboeonUx7fE8zvCWVtQ50TqjMfeuZUfXmPdjf_nVq8vY7m1pIKdOZ87ZLipdmQwkeTwF4UFp3CDMfnaHZufKwt2fdaSEc8w4HPGlAsRPMvcqCgT1-N0kh8-CatWsS1qZw76JrsnkG4VgNQ-T4Cp3Jk0hGa_i5TgBrx-kBjE8EYeEMV_8Ky-FVMtlo_ZOnCQ3zJaGdiQkZF4VThs2K7R1RABIUr-xuV3QQumwsAjzkahjsYV70YdUSk6KMvKoZNtCr3i93cxHiFbejE");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">The Lincoln Highway</p>
+                          <p class="text-sm text-[#92adc9]">Amor Towles</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-[#233648]">
+                    <td class="px-6 py-4 font-medium text-white whitespace-nowrap">#8342F</td>
+                    <td class="px-6 py-4">December 05, 2023</td>
+                    <td class="px-6 py-4">$10.99</td>
+                    <td class="px-6 py-4">Visa **** 1234</td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-14 bg-center bg-no-repeat bg-cover rounded"
+                          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeW09gKIcoYrdZ8w4jxOtmveo0P5nxLrGPArl8GuRYIBO7x3nO3G9FwRDXtpWk5yPYghf97j079417CDMlzlkW7F24c6Dn6wn3TXTUN9K7Ar5GxUO_MRjC5Bb7FBql9pm_V_K01acsGMDVoX4EGndukOlK7ev2_R_bBhK49ZgBEGlOJeJqI1Gf6NHKOw7ARUfZJkfd2TXrWa5tfZ5X0-Tg9vjTcHivj4PFHoGR4uZR0BkkGtkc0jpwtBPNZEYAu7usx38qBEuyf_lB");'>
+                        </div>
+                        <div>
+                          <p class="font-medium">The Vanishing Half</p>
+                          <p class="text-sm text-[#92adc9]">Brit Bennett</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button
+                        class="flex items-center justify-center gap-2 rounded-lg bg-[#233648] px-4 py-2 text-sm font-medium text-white hover:bg-primary">View
+                        Details</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

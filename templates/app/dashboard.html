@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<div class="mb-6">
+    <div class="relative">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
+        <input class="w-full pl-10 pr-4 py-3 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark" placeholder="Search for books, journal articles and more..." type="text"/>
+    </div>
+</div>
+<section class="mb-8">
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex space-x-6 border-b border-border-light dark:border-border-dark">
+            <button class="pb-2 border-b-2 border-primary text-primary font-semibold">Recommended</button>
+            <button class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">Store</button>
+            <button class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">News</button>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span class="text-subtext-light dark:text-subtext-dark">Category</span>
+            <select class="rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark">
+                <option>All</option>
+                {% for category in filter_category %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg">
+            <img alt="Book cover for A Teaspoon of Earth and Sea" class="rounded-lg mb-4 w-full h-48 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMx038spWtTHegzNidup0xfiJu8l6UAQ4tTJ1ETyq_SOBV0wNhQFAfxMagd2bTYdzYokxAB165oXnFGS1POdfKkvXC3S2CAE-gm-RIrWrV5_4fhyfrMGBLkcNYuNSTK9-ZINs2BwiC1MOP_4YF88_VIE9ic58P2oy7Q9G8RRqSsCse_nceJ9r8cUj_jqGbI_VvGcifO4eR1onqN0Y1BmO2KB3vhpAYs9kGeFTPCvj4_sI-K3DsOzbVdX2019GvS8ksvAW2qqGooB25"/>
+            <span class="text-xs font-semibold text-green-500 bg-green-500/10 py-1 px-2 rounded-full">Fiction</span>
+            <h3 class="font-bold text-lg mt-2 text-text-light dark:text-text-dark">A Teaspoon of Earth and Sea long</h3>
+            <p class="text-sm text-subtext-light dark:text-subtext-dark">Dina Nayeri</p>
+        </div>
+        <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg">
+            <img alt="Book cover for Here Is Real Magic" class="rounded-lg mb-4 w-full h-48 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2MaeoVEFPTqpehYV2t5_EUilcW9at7j5Ykk1EbmkFIBOvvebsPeB3Q8EtRpUb_CTJOG90-iTDBd_LlRNowQAljxzG-WFkqJf6epaaE5QPUeeAV406eLFTbfIHZ6hQX-aKI-BQwDNbiGX8cfxmgx9JklXG5ffjUycLMT1t8-rZ7wYl9wKbe8jCQOIoVQOLsdkBzSESylJH-SAcPk_MMk0tuKeUCT9keCrGvmfFYWGhgb9GWq9szn-j1Sy354tiXBtgwEB2u3UlzaN"/>
+            <span class="text-xs font-semibold text-green-500 bg-green-500/10 py-1 px-2 rounded-full">Fiction</span>
+            <h3 class="font-bold text-lg mt-2 text-text-light dark:text-text-dark">Here Is the real Magic</h3>
+            <p class="text-sm text-subtext-light dark:text-subtext-dark">Nate Staniforth</p>
+        </div>
+        <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg">
+            <img alt="Book cover for The Water Cure" class="rounded-lg mb-4 w-full h-48 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLPWValcuRiJzeBGL35bIY5Nezu0r47wxR_wE3iUqtqfs4_HMsH56bou3YtuA9KRauhSPyY1kvxU1cy1je7REa3Qn9gSrRPJG3lptQehwaVK9a0VxyQP9_KLUz2sQxcN6nq6XN_t7CEVKsQSeX-LfQK3FjD4WxDYYfiRk4hMaHUT_mI38vM5WZBGb5YuYHWFLG47x4NbUHHgGnuj4ewhx4nqTBbd9I2rsh8Z-lITj4z5rJabtnPLIOpieFOWxMr2o4BM2mqn02HEje"/>
+            <span class="text-xs font-semibold text-purple-500 bg-purple-500/10 py-1 px-2 rounded-full">Biographic</span>
+            <h3 class="font-bold text-lg mt-2 text-text-light dark:text-text-dark">The Water Cure</h3>
+            <p class="text-sm text-subtext-light dark:text-subtext-dark">Sophie Mackintosh</p>
+        </div>
+        <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg">
+            <img alt="Book cover for Sugar Run" class="rounded-lg mb-4 w-full h-48 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP2QnVJMcvSL09ExsrX9_NsrDuAmQjL3nMyevzooejG0XkJ71lyxYj-oYNqPpkM9FxCJewUC7EsMluxg1BlsMORlSPiu_yT-E6JgZqA-g"/>
+            <span class="text-xs font-semibold text-yellow-500 bg-yellow-500/10 py-1 px-2 rounded-full">Mystery</span>
+            <h3 class="font-bold text-lg mt-2 text-text-light dark:text-text-dark">Sugar Run</h3>
+            <p class="text-sm text-subtext-light dark:text-subtext-dark">Mesha Maren</p>
+        </div>
+        <div class="bg-blue-500 text-white p-6 rounded-lg flex flex-col items-center justify-center text-center">
+            <h3 class="font-bold text-xl mb-2">TEXTBOOKS SHOULD BE PASSED</h3>
+            <p class="mb-4">Till 30th June</p>
+        </div>
+    </div>
+</section>
+<section>
+    <h3 class="text-xl font-bold mb-4 text-text-light dark:text-text-dark">Trending Books</h3>
+    <div
+        class="bg-card-light dark:bg-card-dark rounded-lg overflow-hidden border border-border-light dark:border-border-dark">
+        <table class="w-full text-left">
+            <thead class="bg-background-light dark:bg-background-dark/50">
+                <tr>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">Title
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">Author
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">Category
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">
+                        Status</th>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">Price
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-subtext-light dark:text-subtext-dark">Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border-light dark:divide-border-dark">
+                <tr class="text-sm text-text-light dark:text-text-dark">
+                    <td class="p-4 flex items-center">
+                        <img alt="Book cover for The Lovely Bones"
+                            class="w-8 h-12 object-cover rounded-sm mr-4"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0xYFbEKYNASegtrp4qz3wv3WHb2Jmw9VYHz9ahh9Lsy9XHovXI8We0E9T2XQpdv5gJJPRaiOwM34-qFNDkOLPdJEWZFnA32wMKOVPcn4Q73wENcLdUHqiURW4zajCehh91t4nILRPa0BPSNMgA7i7_Pv_poXjGbtiWlCM6zpjZpcGAKFkUL1jX2Ox0s4C9YOSkBuksiZbnQbLhiADGhsv5QniVk1xTFi05DgkivwtE73-7cSViNXWtt8gsa_Yjyg7JSBNJ9Pkn6PK" />
+                        The Lovely Bones
+                    </td>
+                    <td class="p-4">Alice Sebold</td>
+                    <td class="p-4"><span
+                            class="text-xs font-semibold text-yellow-500 bg-yellow-500/10 py-1 px-2 rounded-full">Mystery</span>
+                    </td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">Booked till 16.03</td>
+                    <td class="p-4"><button
+                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors">Book
+                            from 19.03</button></td>
+                </tr>
+                <tr class="text-sm text-text-light dark:text-text-dark">
+                    <td class="p-4 flex items-center">
+                        <img alt="Book cover for The Girl in Red"
+                            class="w-8 h-12 object-cover rounded-sm mr-4"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDBj8DrjkgBkeljWIflOdZNf3ORVEGt9Tmk9hnQSbmFyF-XfAYzrOdeKZ_umseEmepf62gOJMRK99MOUwiaUp5CcXtFBszOkhvQoP25fGm_bqJ39NodApZ_p1Z0KB1KEXJm4PRpWamvXb2PMucWX5W8BZvHhVxqNeSI7GmwyUXW55dmMKm82Jg_kAWPEu2-0HysXXDZ99RhJpQSm9R5waHxWZS2vw6zubpg0bg9kvP5l33m0LOIaB7ZZlyCaJjyCqLtw1yy8kdHJQR" />
+                        The Girl in Red
+                    </td>
+                    <td class="p-4">Christina Henry</td>
+                    <td class="p-4"><span
+                            class="text-xs font-semibold text-yellow-500 bg-yellow-500/10 py-1 px-2 rounded-full">Mystery</span>
+                    </td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
+                    <td class="p-4 text-green-500">Free</td>
+                    <td class="p-4"><button
+                            class="bg-primary text-white py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">Take
+                            a book</button></td>
+                </tr>
+                <tr class="text-sm text-text-light dark:text-text-dark">
+                    <td class="p-4 flex items-center">
+                        <img alt="Book cover for The Bees" class="w-8 h-12 object-cover rounded-sm mr-4"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8H0jlm6Uvno-xWaIaIBIlGmcw_VD8ES9Pc6lE4oG_wlyGs0j-p0AMY6abrTmyMvpqRIM-saWISzcng70b6iiAbXp-L5NI_P-VJF87MONixwnlV_JQ-4T5r48CCqka8QwhzvK9lbuYIO8HDkt-EuvmGBgySfW80uAd369pwk2FDq3TZ3XvMwwHrL_95mwtRt9zqE4WZUcooTv74HDmeBG3RNQ2qh3oXeq9nqlluFoS3eMNzyBtZ7lZyWLMYwFSLlmIawDAzdI4OqSG" />
+                        The Bees
+                    </td>
+                    <td class="p-4">Laline Paull</td>
+                    <td class="p-4"><span
+                            class="text-xs font-semibold text-green-500 bg-green-500/10 py-1 px-2 rounded-full">Fiction</span>
+                    </td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">only reading-room</td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">Taken by you</td>
+                    <td class="p-4"><button
+                            class="border border-orange-500 text-orange-500 py-1 px-4 rounded-full text-sm font-semibold hover:bg-orange-500 hover:text-white transition-colors">Return
+                            till 21.03</button></td>
+                </tr>
+                <tr class="text-sm text-text-light dark:text-text-dark">
+                    <td class="p-4 flex items-center">
+                        <img alt="Book cover for Lord of the Flies"
+                            class="w-8 h-12 object-cover rounded-sm mr-4"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeNOElB1tsmaTYGvgejNIpVhOxSRqoDzgnY08iNYsxCU8BJHZbI_b4wFTI30lkPVDOr806Fud6M-Oia-vL6RFG5yCwQKKAMsEBFYYR28Gy1eVhBeZEE7sdVol2arC9oLg7FhO7cNUeh0uZQwMkA4ewH3WxhFRbdtguFMlwSmP86m5ZaqOipBTDrzU06oJXyU_YUy0gREE6-motcHcPhQ5dqzjtusCPrqC4k6ZEORBnjvRQJZm71lwVObMleL3wzLKugzweqclql_8o" />
+                        Lord of the Flies
+                    </td>
+                    <td class="p-4">William Golding</td>
+                    <td class="p-4"><span
+                            class="text-xs font-semibold text-purple-500 bg-purple-500/10 py-1 px-2 rounded-full">Biographic</span>
+                    </td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
+                    <td class="p-4 text-green-500">Free</td>
+                    <td class="p-4"><button
+                            class="bg-primary text-white py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">Take
+                            a book</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

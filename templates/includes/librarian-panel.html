@@ -1,0 +1,23 @@
+<aside class="w-64 bg-card-light dark:bg-card-dark flex flex-col p-4 border-r border-border-light dark:border-border-dark">
+    <div class="flex items-center mb-8">
+        <span class="material-icons text-primary text-3xl">local_library</span>
+        <h1 class="text-2xl font-bold text-text-light dark:text-text-dark ml-2">Eldergate</h1>
+    </div>
+    <nav id="menu-links" class="flex flex-col space-y-2">
+        <a class="flex items-center p-2 rounded-lg text-text-light dark:text-text-dark bg-primary/10 text-primary font-semibold" href="{% url 'librarian-dashboard' %}">
+            <span class="material-icons mr-3">dashboard</span>
+            Dashboard
+        </a>
+        <a class="flex items-center p-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary" href="{% url 'librarian-book-management' %}">
+            <span class="material-icons mr-3">book</span>
+            Books
+        </a>
+        
+    </nav>
+    <!-- <div class="mt-auto">
+        <button class="w-full bg-primary text-white py-2 px-4 rounded-lg flex items-center justify-center">
+            <span class="material-icons mr-2">add</span>
+            Order a New Book
+        </button>
+    </div> -->
+</aside>

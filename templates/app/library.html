@@ -1,0 +1,167 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard - Eldergate Library{% endblock %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+      <!-- <main class="px-10 py-8"> -->
+        <section class="mb-12">
+          <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">Currently Reading</h2>
+          <div class="flex items-stretch justify-between gap-8 rounded-lg bg-card-dark p-6 border border-border-dark">
+            <div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
+              <div>
+                <p class="text-slate-50 text-2xl font-bold leading-tight">The Midnight Library</p>
+                <p class="text-slate-400 text-base font-normal leading-normal mt-1">Matt Haig</p>
+                <div class="mt-6">
+                  <div class="flex gap-6 justify-between mb-2">
+                    <p class="text-slate-50 text-base font-medium leading-normal">Page 192 of 320</p>
+                    <p class="text-slate-50 text-sm font-normal leading-normal">60%</p>
+                  </div>
+                  <div class="rounded bg-[#21262d]">
+                    <div class="h-2 rounded bg-primary" style="width: 60%;"></div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] w-fit hover:bg-primary/90 transition-colors">
+                <span class="truncate">Continue Reading</span>
+              </button>
+            </div>
+            <div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover rounded-lg flex-1 max-w-xs"
+              data-alt="Book cover for The Midnight Library"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQlioeX6bHcPtQlDBO9nkD1KMtcGkWbsGUOOWAura5xYkW3RLvSaUzvGnsAKstRKraHU6oazxFxBJo9rTc1Ans2WHNdGYBB8bJh4IFJoeNcaRuIsulRNMDCqEkcONJOHbduOuebbjSNhVvrgwoWRGLdrjT0z4XfVGujucW3ci97asbFdOpSp1ZUTu8qh2rcGjNrkwzG4wuf5Qohiv_mscECIAMtPnzyNj_AoMjNMv8qetrBSHH_WkzAf6-Ywm2aaM1ptWRRm0k9tsz");'>
+            </div>
+          </div>
+        </section>
+        <section class="px-8 py-8">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em]">My Purchased Books</h2>
+            <div class="flex gap-4">
+              <select
+                class="form-select rounded-lg bg-card-dark border-border-dark text-slate-50 text-sm focus:ring-primary focus:border-primary">
+                <option>Filter by Genre</option>
+                <option>Fiction</option>
+                <option>Non-Fiction</option>
+                <option>Fantasy</option>
+              </select>
+              <select
+                class="form-select rounded-lg bg-card-dark border-border-dark text-slate-50 text-sm focus:ring-primary focus:border-primary">
+                <option>Sort by</option>
+                <option>Title</option>
+                <option>Author</option>
+                <option>Date Added</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for Project Hail Mary"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2LwzGVrU_d3_y5cUdc0gpB4y3UMwy-pkrzc4yV40xPgmERHnHO2ogKHSYGVtuIgia_Q-Ay6OHxQMqycCakzMFOlOd8gK9IbmYYorGmwwgfHhcDoA9VhpfsF3xACSQvC1FAVXnnRyyHjq1lns9Bq2-WLahV1dQCYmgjVOXoZ4MjNX4OLoj3wPEOjc4SgbxGWSgTVPHFRg3Zgee8LW1M-izTr_s8Mw04DlYbn6acf6f04orTyOdfdh1kN1MYuozOuQXRNfHtcLDwqwg");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">Project Hail Mary</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">Andy Weir</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Read Now</span>
+              </button>
+            </div>
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for Klara and the Sun"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiOgJeNeFxKtmRHqe2JJ4CGJvcmnfVpLyWUfcGmjG4kd3BVSJZWbLQ_8BcRU4WrANJxzIBrhaU5vfXpOGw1rsCDBF-uiG5zO2GiUTcyK8FghmNKyXrm8AENQ4_PEqNqEn43DUBqBWKxtxTDPFsb8RELbmmigTf2fvym_pv7ENrGjbICqZOLIF3mDoIKgmCq5Q1_evyopD2S90_AB9xVLhH6hL5znzY6HRFb1f2z9zwi_03rS0N0s8fUUvieD2OLdC-GampgX147tdB");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">Klara and the Sun</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">Kazuo Ishiguro</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Read Now</span>
+              </button>
+            </div>
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for The Vanishing Half"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBC44mSc9gUd4bro_Xl0frqnBD8469PN_NL88FRaDKzvup7oVlWksvqxmJNcqP_nUT8mPYM-B21y-b8NTC4Ubc3R2xp6Px34IwJnKqehHwo53pz8a1k9wf4Q6Jl_bWuTy8bqtUCWxnXtOPsv-Wh0hD4dJubO91dnKPkFMYuq0WqyUetsuWBCp3XqZqGd6iVw-qi4Qdr5kc9GgrrzWk-SsQxxbIBcEwizTKoxo2vd7k0i4NfZWzsic6-NnLiMk_mCDHr1tXfK_TAPVJ");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">The Vanishing Half</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">Brit Bennett</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Read Now</span>
+              </button>
+            </div>
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg" data-alt="Book cover for Dune"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD2vJcHjMLsoULv0DQiiUqKEIACXaVHSBWGCwfIPWHXoek8JSld2MoENQ1730S4smxon9OCMF8cQGjacgbvHVreb5-iTS2CGJe2CFFwGSC6NX7a4UM6Wz2vtoXRwU1dxfBuosk9V8aiT333mB0amgyhksVBGKprS3zr__FNsq31UtlZYisOchEVd9iVy2O_fkSheBJrBotp5Ty1MYofuURS0452D1c8Eph7_7yV8XxKV0IszNbTr6nNsRUzVW1__U66uxbGjNoJkNs8");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">Dune</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">Frank Herbert</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Read Now</span>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="mt-12 px-8 py-8">
+          <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">My Free Books</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for Pride and Prejudice"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7o1GPaOSYv9fZcYX0fAaBC42j8uWizcFnaswRLd3jrqsQCO5Yp9pzIGbAiJ22qirs6jvKFWayBPHztUvhYiC32R8U1N6xtQ9v22OQAvGymIkBRPlYIX6l9xuEht4jnvUoy_d1quF7AtqJIfXbQBwNzoINot0Yk5rOB0t1iv5iVIP6PidADUJquV-e0iJgEYTJ-1Cn-f2Q82oeP5LpyJo2BbAAG_mecMP8YlDKblk6skoIljOon6B-y_gbOp9NHtutLYunkOvb_4bG");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">Pride and Prejudice</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">Jane Austen</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Start Reading</span>
+              </button>
+            </div>
+            <div
+              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
+              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
+                data-alt="Book cover for The Great Gatsby"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDUODQGbZi5TxSH3nMeJ7oTojJw9m4kdOlBwPMukxxB2HUYUCBYtHL1mcHK-J5Ivhozd9CAKu3ZpustIsrbdI4LieWVc10LyXTXbfBRZu3pWxYqY8rAMWGPvu2XTOkoxB63pmnIMb4lRixcEqVCqOX_k-rO-atUzqtwIerlznwi-JkHCehD1lFgRRA563E2KXOgw2nLpbF4yS0DKkoaTIxt0qo0C5oqrSKDFRiu_M4H04vr1-rBAMqclVne_pusm_XRZPJDXFbRkuFT");'>
+              </div>
+              <div class="flex flex-col gap-1 flex-grow">
+                <p class="text-slate-50 text-base font-bold leading-tight">The Great Gatsby</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">F. Scott Fitzgerald</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="truncate">Start Reading</span>
+              </button>
+            </div>
+          </div>
+        </section>
+        <div class="text-center py-20 hidden">
+          <h3 class="text-slate-50 text-xl font-semibold mb-2">Your library is empty.</h3>
+          <p class="text-slate-400 mb-6">Explore the store to find your next great read!</p>
+          <button
+            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] mx-auto hover:bg-primary/90 transition-colors">
+            <span class="truncate">Go to Store</span>
+          </button>
+        </div>
+      <!-- </main> -->
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+<!-- Edit Book Modal -->
+<div id="edit-book-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="relative rounded-lg bg-card-dark p-8 shadow-lg w-full max-w-4xl">
+        <!-- Close button -->
+        <button id="close-edit-book-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <h2 class="text-2xl font-bold text-text-dark mb-6">Edit Book</h2>
+
+        <form id="edit-book-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <!-- Left Column -->
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-text-dark text-base font-medium leading-normal pb-2">Book Title</p>
+                        <input id="edit-book-title" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="text" name="title" id="edit-book-title" value="" />
+                    </label>
+
+                    <label class="flex flex-col">
+                        <p class="text-text-dark text-base font-medium leading-normal pb-2">Book Description</p>
+                        <textarea id="edit-book-description" class="form-textarea rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg p-4" name="description" id="edit-book-description" rows="5"></textarea>
+                    </label>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">Author</p>
+                            <input id="edit-book-author" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="text" name="author" id="edit-book-author" />
+                        </label>
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">ISBN</p>
+                            <input id="edit-book-isbn" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="text" name="isbn" id="edit-book-isbn" />
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">Publisher</p>
+                            <input id="edit-book-publisher" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="text" name="publisher" id="edit-book-publisher" />
+                        </label>
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">Publication Date</p>
+                            <input id="edit-book-publication_date" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="date" name="publication_date" id="edit-book-publication_date" />
+                        </label>
+                    </div>
+
+                    <label class="flex flex-col">
+                        <p class="text-text-dark text-base font-medium leading-normal pb-2">Select Category</p>
+                        <select id="edit-book-category" name="category" class="form-select rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">Total Pages</p>
+                            <input id="edit-book-total_pages" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4" type="number" name="total_pages" id="edit-book-total_pages" />
+                        </label>
+                        <label class="flex flex-col">
+                            <p class="text-text-dark text-base font-medium leading-normal pb-2">Set Price (USD)</p>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-dark-text">$</span>
+                                <input id="edit-book-price" class="form-input rounded-lg text-dark-text focus:outline-0 focus:ring-2 focus:ring-dark-primary-accent border-none bg-dark-primary-bg h-14 p-4 pl-8" placeholder="0.00" type="number" name="price" step="0.01" id="edit-book-price" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col">
+                        <p class="text-text-dark text-base font-medium leading-normal pb-2">Upload Book Image</p>
+                        <img id="edit-cover-image-preview" src="#" alt="Image Preview" class="w-full h-48 object-contain rounded-lg mb-2"/>
+                        <input id="edit-cover-image-input" type="file" name="cover_image" id="edit-cover-image-input" class="form-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80" accept="image/*" />
+                    </div>
+
+                    <div class="flex flex-col">
+                        <p class="text-text-dark text-base font-medium leading-normal pb-2">Upload Book File</p>
+                        <div id="edit-pdf-filename" class="text-subtext-dark mb-2"></div>
+                        <input id="edit-pdf-link-input" type="file" name="pdf_link" id="edit-pdf-link-input" class="form-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80" accept=".pdf,.epub,.mobi" />
+                    </div>
+
+                    <div class="flex justify-end space-x-4 mt-auto">
+                        <button type="button" id="cancel-edit-book-button" class="rounded-lg bg-gray-600 px-4 py-2 text-text-dark">Cancel</button>
+                        <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-white">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

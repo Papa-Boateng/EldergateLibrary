@@ -1,0 +1,252 @@
+{% extends 'librarian_layout.html' %}
+
+{% block title %}Librarian - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="flex-1 p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Search and Filters -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <!-- SearchBar -->
+            <div class="md:col-span-2">
+                <label class="flex flex-col w-full">
+                    <div
+                        class="relative flex w-full flex-1 items-stretch rounded-lg h-12 bg-[#192633]">
+                        <span
+                            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#92adc9]">search</span>
+                        <input
+                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#324d67] bg-[#192633] focus:border-primary h-14 placeholder:text-[#92adc9] pl-12 pr-4 py-[15px] text-base font-normal leading-normal"
+                            placeholder="Search by title or ISBN..." type="text" id="book-search-input" />
+                    </div>
+                </label>
+            </div>
+            <!-- Chips / Filters -->
+            <div class="flex gap-4">
+                <select class="rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark">
+                <option>All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="bg-[#111a22] rounded-xl shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-[#192633]">
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                Cover</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                Title &amp; Author</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                Category</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                Subcategory</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                ISBN</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">
+                                Stock</th>
+                            <th
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#324d67]">
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
+                                    data-alt="Book cover for The Midnight Library"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiQWb2879w9W-SrsmuBzXzvoktwlyBDMMISjCbnf2jIRf9-tKGOqELtMpfvlRIIJCzMW0K3uiL6IQ_0tlVMpR5Ipt2Lxi-siu-fziRNaBHXkpm4RGlTE8tOh8nIynZJ2XaH6ch5xg-o4Z01RpPjsRZX2zDJi_KbzE2Odlofpakzvx29g1El2-aJ9omJWEOqM5fFh7H2bbpCu4Um_2uuzaZYwAvtjJjoU5kO_lMZUJfIvxxgx2Lh6MNzC0X3_dHoxs234ckqhYKJvOh");'>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-black dark:text-white">The Midnight
+                                    Library</div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">Matt Haig</div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Contemporary</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                978-0-7352-1129-2</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
+                                15</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button class="text-primary hover:text-blue-500 p-2">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="text-danger hover:text-red-400 p-2">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
+                                    data-alt="Book cover for The Vanishing Half"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKm3tQ5tMGuucbUQaFEgkl7pnnZS15_M4hK5__Vvz1prOPGpZg5rhvlawSp7L5hsBVFy_aVLiDrfNgdlapjuSUgLPMAhGKb0cZnTQzRsDdLjm7570geMn2xoRRA8i_235JEQms2i3IIFBo_LjBOQsxXTamVQvcam1F9e9g-nTyPKbN1lzNb9axRHUoz7ciivjxUE-gf0cCUz7Snb6TywCGnotG34bsi5xU_hZsAuNle5sihCfUANmVHBTmdxN1Z_lOVS5_MOVhcC_q");'>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-black dark:text-white">The Vanishing Half
+                                </div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">Brit Bennett</div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Historical Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                978-0-525-53629-1</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
+                                8</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button class="text-primary hover:text-blue-500 p-2">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="text-danger hover:text-red-400 p-2">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
+                                    data-alt="Book cover for Sapiens"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiOxDtcQa0p8ajNAFd_cysJ7ZT7qlVaEjIx-Tm_fQSWFXlHp4s0YJ-MKWbSUdUYnXZJ6Y4aTkBPnErTIoK_H36U5Hbx96fvrkavbzSs_ShQTWW1VfxTnPIZfxn_Vl39MUZPGvADYuVLB8fE4emHbvoRjbedg44qbMtPtsC3F1Ar7eKpVRR95eeIEMNUGFGvj86rTxDEDBCIC9tMS5efjK7jpsgizf_w6TxUzdbNG23BCC8ZKjwRu6Mebhk0quwEOOKP2rNo1Ib4AdH");'>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-black dark:text-white">Sapiens: A Brief
+                                    History</div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">Yuval Noah Harari
+                                </div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Non-Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                History</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                978-0-06-231609-7</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
+                                20</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button class="text-primary hover:text-blue-500 p-2">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="text-danger hover:text-red-400 p-2">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
+                                    data-alt="Book cover for Atomic Habits"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCfSmfvA4IsOYljaDfXbWA4mNuKw-XEzXnYr-AneZRGR8t0oeq8Y2cQdAX7SCV_19lAQNRo51vLFIQqz79YQ2mYa_o1ZYYpWFR9968vprt0Lft6OM2_nBnsCPtR8JlY-fpuwp_yRuIubh7CFECqrizRMPxc0bj4y8IDpWEpV14siFTNJ7PmWOU93nAqHdxR6LFwPS_XJHMyyOY_4rtJKeFIKq4QQyvpDmwayLcM2bKOEkG_Pfk7ueWv85KhT0fU-WdKnpn2ByDtIcc");'>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-black dark:text-white">Atomic Habits
+                                </div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">James Clear</div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Non-Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Self-Help</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                978-0-7352-1129-2</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
+                                25</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button class="text-primary hover:text-blue-500 p-2">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="text-danger hover:text-red-400 p-2">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
+                                    data-alt="Book cover for Project Hail Mary"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXE4kCjO0y44jjCMCXayb5q0GSojLEoorQuQJFedWzkG5G6I-feczoiilqbyJjJjxskDmHd2WUQ_HvofsBy4TJJ8N1U5YKSUg0GXoofx0l1YI-DfbUe4jOxXdqmxtHOQgVanNUSYV1Qzr1frL20jIoEH_fzqX0Jq0jyDpOx8493iKuWjQ7ZLsj1vvpvAVmlSu6HkrP8lcVQpO4vcTDg2MrJOZ-78onw2P_AB0RC4Jkp8r7cSiVuQRhOL0HmMgB9BS8mnX-Ai-s-j0k");'>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-black dark:text-white">Project Hail Mary
+                                </div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">Andy Weir</div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Science Fiction</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                Hard Sci-Fi</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
+                                978-0-593-13520-4</td>
+                            <td
+                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
+                                12</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button class="text-primary hover:text-blue-500 p-2">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="text-danger hover:text-red-400 p-2">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="flex justify-between items-center mt-6">
+            <span class="text-sm text-[#92adc9]">Showing 1 to 5 of 50 entries</span>
+            <div class="flex items-center gap-2">
+                <button
+                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">Previous</button>
+                <button class="px-3 py-1 rounded-lg bg-primary text-white text-sm">1</button>
+                <button
+                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">2</button>
+                <button
+                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">3</button>
+                <button
+                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

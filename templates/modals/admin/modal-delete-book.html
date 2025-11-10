@@ -1,0 +1,19 @@
+<!-- Delete Book Modal -->
+<div id="delete-book-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="relative rounded-lg bg-card-light dark:bg-card-dark p-8 shadow-lg w-full max-w-md">
+        <!-- Close button -->
+        <button id="close-delete-book-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 class="mb-4 text-xl font-bold text-text-light dark:text-text-dark">Confirm Deletion</h2>
+        <p class="text-subtext-light dark:text-subtext-dark mb-6">Are you sure you want to delete '<span id="delete-book-title"></span>'?</p>
+        <form id="delete-book-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="book_id" id="delete-book-id">
+            <div class="flex justify-end space-x-4">
+                <button type="button" id="cancel-delete-button" class="rounded-lg bg-gray-200 dark:bg-gray-600 px-4 py-2 text-text-light dark:text-text-dark">Cancel</button>
+                <button type="submit" class="rounded-lg bg-danger px-4 py-2 text-white">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
