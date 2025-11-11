@@ -45,7 +45,26 @@ def dashboard_view(request):
         title = "Dashboard"
         subtitle = "Welcome back, your library awaits you."
         filter_category = Category.objects.all()
-        return render(request, 'app/dashboard.html', {'user': user, 'title': title, 'subtitle': subtitle, 'filter_category': filter_category})
+        trending_books = Book.objects.filter(is_trending=True).order_by('-timestamp')[:5]
+        trending_books_data = []
+        for trending_book in trending_books:
+            style_class, style_text, style_book_type = helpers.get_book_type_from_price('reader', trending_book.price)
+            category_class = helpers.user_category_class(trending_book.category.name)
+            trending_books_data.append({
+                'id': trending_book.id,
+                'title': trending_book.title,
+                'author': trending_book.author,
+                'category': trending_book.category.name,
+                'price': trending_book.price,
+                'cover_image': trending_book.cover_image,
+                'price_style': {
+                    'class': style_class,
+                    'text': style_text,
+                    'status': style_book_type
+                },
+                'category_class': category_class
+            })
+        return render(request, 'app/dashboard.html', {'user': user, 'title': title, 'subtitle': subtitle, 'filter_category': filter_category, 'trending_books_data': trending_books_data})
     else:
         return redirect('login')
 def library_view(request):
@@ -110,7 +129,7 @@ def admin_dashboard_view(request):
         recent_books = Book.objects.order_by('-timestamp')[:5]
         books_with_styles = []
         for book in recent_books:
-            style_class, style_text, style_book_type = helpers.get_book_type_from_price(book.price)
+            style_class, style_text, style_book_type = helpers.get_book_type_from_price('admin', book.price)
             books_with_styles.append({
                 'book': book,
                 'style': {

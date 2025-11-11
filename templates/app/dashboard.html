@@ -17,7 +17,6 @@
         <div class="flex space-x-6 border-b border-border-light dark:border-border-dark">
             <button class="pb-2 border-b-2 border-primary text-primary font-semibold">Recommended</button>
             <button class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">Store</button>
-            <button class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">News</button>
         </div>
         <div class="flex items-center space-x-2">
             <span class="text-subtext-light dark:text-subtext-dark">Category</span>
@@ -82,73 +81,30 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-border-light dark:divide-border-dark">
+                {% for book in trending_books_data %}
                 <tr class="text-sm text-text-light dark:text-text-dark">
                     <td class="p-4 flex items-center">
-                        <img alt="Book cover for The Lovely Bones"
+                        
+                        <img alt="Book cover for {{ book.title }}"
                             class="w-8 h-12 object-cover rounded-sm mr-4"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0xYFbEKYNASegtrp4qz3wv3WHb2Jmw9VYHz9ahh9Lsy9XHovXI8We0E9T2XQpdv5gJJPRaiOwM34-qFNDkOLPdJEWZFnA32wMKOVPcn4Q73wENcLdUHqiURW4zajCehh91t4nILRPa0BPSNMgA7i7_Pv_poXjGbtiWlCM6zpjZpcGAKFkUL1jX2Ox0s4C9YOSkBuksiZbnQbLhiADGhsv5QniVk1xTFi05DgkivwtE73-7cSViNXWtt8gsa_Yjyg7JSBNJ9Pkn6PK" />
-                        The Lovely Bones
+                            src="{{ book.cover_image.url }}" />
+                        {{ book.title }}
                     </td>
-                    <td class="p-4">Alice Sebold</td>
+                    <td class="p-4">{{ book.author }}</td>
                     <td class="p-4"><span
-                            class="text-xs font-semibold text-yellow-500 bg-yellow-500/10 py-1 px-2 rounded-full">Mystery</span>
+                            class="{{ book.category_class }}">{{ book.category }}</span>
                     </td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">Booked till 16.03</td>
+                    <td class="p-4 text-subtext-light dark:text-subtext-dark">{{ book.price_style.status }}</td>
+                    <td class="{{ book.price_style.class }}">{{ book.price_style.text }}</td>
                     <td class="p-4"><button
-                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors">Book
-                            from 19.03</button></td>
+                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors">Buy
+                            now</button></td>
                 </tr>
-                <tr class="text-sm text-text-light dark:text-text-dark">
-                    <td class="p-4 flex items-center">
-                        <img alt="Book cover for The Girl in Red"
-                            class="w-8 h-12 object-cover rounded-sm mr-4"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDBj8DrjkgBkeljWIflOdZNf3ORVEGt9Tmk9hnQSbmFyF-XfAYzrOdeKZ_umseEmepf62gOJMRK99MOUwiaUp5CcXtFBszOkhvQoP25fGm_bqJ39NodApZ_p1Z0KB1KEXJm4PRpWamvXb2PMucWX5W8BZvHhVxqNeSI7GmwyUXW55dmMKm82Jg_kAWPEu2-0HysXXDZ99RhJpQSm9R5waHxWZS2vw6zubpg0bg9kvP5l33m0LOIaB7ZZlyCaJjyCqLtw1yy8kdHJQR" />
-                        The Girl in Red
-                    </td>
-                    <td class="p-4">Christina Henry</td>
-                    <td class="p-4"><span
-                            class="text-xs font-semibold text-yellow-500 bg-yellow-500/10 py-1 px-2 rounded-full">Mystery</span>
-                    </td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
-                    <td class="p-4 text-green-500">Free</td>
-                    <td class="p-4"><button
-                            class="bg-primary text-white py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">Take
-                            a book</button></td>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="p-4 text-center text-subtext-light dark:text-subtext-dark">No trending books available.</td>
                 </tr>
-                <tr class="text-sm text-text-light dark:text-text-dark">
-                    <td class="p-4 flex items-center">
-                        <img alt="Book cover for The Bees" class="w-8 h-12 object-cover rounded-sm mr-4"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8H0jlm6Uvno-xWaIaIBIlGmcw_VD8ES9Pc6lE4oG_wlyGs0j-p0AMY6abrTmyMvpqRIM-saWISzcng70b6iiAbXp-L5NI_P-VJF87MONixwnlV_JQ-4T5r48CCqka8QwhzvK9lbuYIO8HDkt-EuvmGBgySfW80uAd369pwk2FDq3TZ3XvMwwHrL_95mwtRt9zqE4WZUcooTv74HDmeBG3RNQ2qh3oXeq9nqlluFoS3eMNzyBtZ7lZyWLMYwFSLlmIawDAzdI4OqSG" />
-                        The Bees
-                    </td>
-                    <td class="p-4">Laline Paull</td>
-                    <td class="p-4"><span
-                            class="text-xs font-semibold text-green-500 bg-green-500/10 py-1 px-2 rounded-full">Fiction</span>
-                    </td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">only reading-room</td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">Taken by you</td>
-                    <td class="p-4"><button
-                            class="border border-orange-500 text-orange-500 py-1 px-4 rounded-full text-sm font-semibold hover:bg-orange-500 hover:text-white transition-colors">Return
-                            till 21.03</button></td>
-                </tr>
-                <tr class="text-sm text-text-light dark:text-text-dark">
-                    <td class="p-4 flex items-center">
-                        <img alt="Book cover for Lord of the Flies"
-                            class="w-8 h-12 object-cover rounded-sm mr-4"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeNOElB1tsmaTYGvgejNIpVhOxSRqoDzgnY08iNYsxCU8BJHZbI_b4wFTI30lkPVDOr806Fud6M-Oia-vL6RFG5yCwQKKAMsEBFYYR28Gy1eVhBeZEE7sdVol2arC9oLg7FhO7cNUeh0uZQwMkA4ewH3WxhFRbdtguFMlwSmP86m5ZaqOipBTDrzU06oJXyU_YUy0gREE6-motcHcPhQ5dqzjtusCPrqC4k6ZEORBnjvRQJZm71lwVObMleL3wzLKugzweqclql_8o" />
-                        Lord of the Flies
-                    </td>
-                    <td class="p-4">William Golding</td>
-                    <td class="p-4"><span
-                            class="text-xs font-semibold text-purple-500 bg-purple-500/10 py-1 px-2 rounded-full">Biographic</span>
-                    </td>
-                    <td class="p-4 text-subtext-light dark:text-subtext-dark">can take</td>
-                    <td class="p-4 text-green-500">Free</td>
-                    <td class="p-4"><button
-                            class="bg-primary text-white py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">Take
-                            a book</button></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
