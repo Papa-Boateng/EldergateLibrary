@@ -36,4 +36,19 @@ class BookForm(forms.ModelForm):
         if commit:
             book.save()
         return book
+
+
+class BookSubcategoryForm(forms.ModelForm):
+    subcategory = forms.ModelChoiceField(queryset=SubCategory.objects.all(), empty_label=None)
+    class Meta:
+        model = Book
+        fields = ['subcategory']
+
+    def save(self, commit=True):
+        book = super().save(commit=False)
+        if commit:
+            book.save()
+        return book
+        
+
         

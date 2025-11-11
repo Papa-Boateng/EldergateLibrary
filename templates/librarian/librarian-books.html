@@ -54,180 +54,45 @@
                                 class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
                                 ISBN</th>
                             <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">
-                                Stock</th>
+                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
+                                Date Uploaded</th>
                             <th
                                 class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">
                                 Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-[#324d67]">
+                        {% for book_styles in all_books_list_styles %}
                         <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
                                     data-alt="Book cover for The Midnight Library"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiQWb2879w9W-SrsmuBzXzvoktwlyBDMMISjCbnf2jIRf9-tKGOqELtMpfvlRIIJCzMW0K3uiL6IQ_0tlVMpR5Ipt2Lxi-siu-fziRNaBHXkpm4RGlTE8tOh8nIynZJ2XaH6ch5xg-o4Z01RpPjsRZX2zDJi_KbzE2Odlofpakzvx29g1El2-aJ9omJWEOqM5fFh7H2bbpCu4Um_2uuzaZYwAvtjJjoU5kO_lMZUJfIvxxgx2Lh6MNzC0X3_dHoxs234ckqhYKJvOh");'>
+                                    style='background-image: url("{{ book_styles.book.cover_image.url }}");'>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">The Midnight
-                                    Library</div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">Matt Haig</div>
+                                <div class="text-sm font-semibold text-black dark:text-white">{{ book_styles.book.title }}</div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">{{ book_styles.book.author }}</div>
                             </td>
                             <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Fiction</td>
+                                class="{{ book_styles.category_class }}">
+                                {{ book_styles.book.category.name }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Contemporary</td>
+                                {{ book_styles.book.subcategory.name }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                978-0-7352-1129-2</td>
+                                {{ book_styles.isbn_formatted }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                15</td>
+                                {{ book_styles.book.timestamp }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2">
+                                <button class="text-primary hover:text-blue-500 p-2" data-edit-book data-book-id="{{ book_styles.book.id }}">
                                     <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="text-danger hover:text-red-400 p-2">
-                                    <span class="material-symbols-outlined">delete</span>
                                 </button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
-                                    data-alt="Book cover for The Vanishing Half"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKm3tQ5tMGuucbUQaFEgkl7pnnZS15_M4hK5__Vvz1prOPGpZg5rhvlawSp7L5hsBVFy_aVLiDrfNgdlapjuSUgLPMAhGKb0cZnTQzRsDdLjm7570geMn2xoRRA8i_235JEQms2i3IIFBo_LjBOQsxXTamVQvcam1F9e9g-nTyPKbN1lzNb9axRHUoz7ciivjxUE-gf0cCUz7Snb6TywCGnotG34bsi5xU_hZsAuNle5sihCfUANmVHBTmdxN1Z_lOVS5_MOVhcC_q");'>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">The Vanishing Half
-                                </div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">Brit Bennett</div>
-                            </td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Fiction</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Historical Fiction</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                978-0-525-53629-1</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                8</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="text-danger hover:text-red-400 p-2">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
-                                    data-alt="Book cover for Sapiens"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiOxDtcQa0p8ajNAFd_cysJ7ZT7qlVaEjIx-Tm_fQSWFXlHp4s0YJ-MKWbSUdUYnXZJ6Y4aTkBPnErTIoK_H36U5Hbx96fvrkavbzSs_ShQTWW1VfxTnPIZfxn_Vl39MUZPGvADYuVLB8fE4emHbvoRjbedg44qbMtPtsC3F1Ar7eKpVRR95eeIEMNUGFGvj86rTxDEDBCIC9tMS5efjK7jpsgizf_w6TxUzdbNG23BCC8ZKjwRu6Mebhk0quwEOOKP2rNo1Ib4AdH");'>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">Sapiens: A Brief
-                                    History</div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">Yuval Noah Harari
-                                </div>
-                            </td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Non-Fiction</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                History</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                978-0-06-231609-7</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                20</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="text-danger hover:text-red-400 p-2">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
-                                    data-alt="Book cover for Atomic Habits"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCfSmfvA4IsOYljaDfXbWA4mNuKw-XEzXnYr-AneZRGR8t0oeq8Y2cQdAX7SCV_19lAQNRo51vLFIQqz79YQ2mYa_o1ZYYpWFR9968vprt0Lft6OM2_nBnsCPtR8JlY-fpuwp_yRuIubh7CFECqrizRMPxc0bj4y8IDpWEpV14siFTNJ7PmWOU93nAqHdxR6LFwPS_XJHMyyOY_4rtJKeFIKq4QQyvpDmwayLcM2bKOEkG_Pfk7ueWv85KhT0fU-WdKnpn2ByDtIcc");'>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">Atomic Habits
-                                </div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">James Clear</div>
-                            </td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Non-Fiction</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Self-Help</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                978-0-7352-1129-2</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                25</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="text-danger hover:text-red-400 p-2">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
-                                    data-alt="Book cover for Project Hail Mary"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXE4kCjO0y44jjCMCXayb5q0GSojLEoorQuQJFedWzkG5G6I-feczoiilqbyJjJjxskDmHd2WUQ_HvofsBy4TJJ8N1U5YKSUg0GXoofx0l1YI-DfbUe4jOxXdqmxtHOQgVanNUSYV1Qzr1frL20jIoEH_fzqX0Jq0jyDpOx8493iKuWjQ7ZLsj1vvpvAVmlSu6HkrP8lcVQpO4vcTDg2MrJOZ-78onw2P_AB0RC4Jkp8r7cSiVuQRhOL0HmMgB9BS8mnX-Ai-s-j0k");'>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">Project Hail Mary
-                                </div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">Andy Weir</div>
-                            </td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Science Fiction</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                Hard Sci-Fi</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                978-0-593-13520-4</td>
-                            <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                12</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="text-danger hover:text-red-400 p-2">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -249,4 +114,112 @@
         </div>
     </div>
 </div>
+
+{% include 'modals/librarian/modal-set-subcategory.html' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('set-subcategory-modal');
+    const closeModalBtn = document.getElementById('close-subcategory-modal');
+    const bookTableBody = document.querySelector('tbody');
+
+    const modalBookTitle = document.getElementById('modal-book-title');
+    const modalBookAuthor = document.getElementById('modal-book-author');
+    const modalBookCategory = document.getElementById('modal-book-category');
+    const modalBookCover = document.getElementById('modal-book-cover');
+    const subcategorySelect = document.getElementById('subcategory-select');
+    const subcategoryForm = document.getElementById('set-subcategory-form');
+
+    if (!bookTableBody) return;
+
+    // --- Open Modal --- //
+    bookTableBody.addEventListener('click', function (event) {
+        const editButton = event.target.closest('[data-edit-book]');
+        if (editButton) {
+            const bookId = editButton.dataset.bookId;
+            const editUrl = `{% url 'edit-book' 0 %}`.replace('0', bookId);
+
+            // 1. Fetch book data
+            fetch(editUrl)
+                .then(response => response.json())
+                .then(bookData => {
+                    // 2. Populate modal with book data
+                    modalBookTitle.textContent = bookData.title;
+                    modalBookAuthor.textContent = `by ${bookData.author}`;
+                    modalBookCategory.textContent = `Category: ${bookData.category}`;
+                    modalBookCover.style.backgroundImage = `url(${bookData.cover})`;
+                    subcategoryForm.action = editUrl; // Set form action URL
+
+                    // 3. Fetch subcategories for the book's category
+                    return fetch(`/books/subcategory/?category=${bookData.category_id}`);
+                })
+                .then(response => response.json())
+                .then(subcategories => {
+                    // 4. Populate subcategory dropdown
+                    subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>'; // Clear existing options
+                    subcategories.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub.id;
+                        option.textContent = sub.name;
+                        subcategorySelect.appendChild(option);
+                    });
+
+                    // 5. Show the modal
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                })
+                .catch(error => {
+                    console.error('Error fetching book data:', error);
+                    NotifyX.error('Failed to load book details.', { duration: 3000, theme: 'dark' });
+                });
+        }
+    });
+
+    // --- Close Modal --- //
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    });
+
+    // Close modal if clicking outside of it
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    });
+
+    // --- Form Submission --- //
+    subcategoryForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const url = this.action;
+
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(data => {
+            if (data.status === 200) {
+                // NotifyX.success(data.body.message, { duration: 3000, theme: 'dark' });
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                location.reload(); // Reload to see the changes
+            } else {
+                NotifyX.error(data.body.error, { duration: 3000, theme: 'dark' });
+            }
+        })
+        .catch(error => {
+            console.error('Error updating subcategory:', error);
+            NotifyX.error('An unexpected error occurred.', { duration: 3000, theme: 'dark' });
+        });
+    });
+});
+</script>
+
 {% endblock %}

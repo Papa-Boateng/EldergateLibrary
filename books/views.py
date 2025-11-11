@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Book, Category, SubCategory
-from .forms import CategoryForm, BookForm, SubcategoryForm
+from .forms import CategoryForm, BookForm, SubcategoryForm, BookSubcategoryForm
 from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
@@ -62,11 +62,18 @@ def books_management_view(request):
 def edit_book_view(request, book_id):
     book = Book.objects.get(id=book_id)
     if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES, instance=book)
+        update_type = request.POST.get('update_type')
+        if update_type == 'subcategory':
+            form = BookSubcategoryForm(request.POST, instance=book)
+        else:
+            form = BookForm(request.POST, request.FILES, instance=book)
+        
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'Book updated successfully!'}, status=200)
         else:
+            if update_type == 'subcategory':
+                return JsonResponse({'error': 'Error Select a Subcategory.'}, status=400)
             return JsonResponse({'error': 'Error updating book.'}, status=400)
 
     book_dict = {

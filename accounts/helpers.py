@@ -36,4 +36,38 @@ def admin_book_management_category(category):
         class_sheet = "text-xs font-semibold text-red-500 bg-red-500/10 py-2 px-6 rounded-full"
     
     return class_sheet
-        
+
+
+##Librarian Book Management Functions##
+def librarian_book_management_category(category):
+    if category == "Fiction":
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-blue-600 dark:text-secondary-text"
+    elif category == "Mystery":
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-yellow-600 dark:text-secondary-text"
+    elif category == "Philosophy":
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-green-600 dark:text-secondary-text"
+    elif category == "History":
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-purple-600 dark:text-secondary-text"
+    elif category == "Biography":
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-pink-600 dark:text-secondary-text"
+    else:
+        class_sheet = "px-6 py-4 whitespace-nowrap text-sm text-red-600 dark:text-secondary-text"
+    
+    return class_sheet
+
+def isbn_formatter(isbn_string):
+    """
+    Formats a 13-digit ISBN string into a standard hyphenated format.
+    Example: "9780525536291" -> "978-0-525-53629-1"
+    """
+    if not isinstance(isbn_string, str) or not isbn_string.isdigit() or len(isbn_string) != 13:
+        return isbn_string # Return original string if not a valid 13-digit string
+
+    parts = [
+        isbn_string[0:3],
+        isbn_string[3:4],
+        isbn_string[4:7],
+        isbn_string[7:12],
+        isbn_string[12:13]
+    ]
+    return "-".join(parts)
