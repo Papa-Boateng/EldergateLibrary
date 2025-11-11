@@ -234,17 +234,23 @@ def librarian_book_management_view(request):
         title = "Book Management"
         subtitle = "Welcome back, access your shelf and manage your library."
         all_books = Book.objects.all()
-        all_books_list_styles = []
+        books_data = []
         for book in all_books:
             category_class = helpers.librarian_book_management_category(book.category.name)
             isbn = helpers.isbn_formatter(book.isbn)
-            all_books_list_styles.append({
-                'book': book,
+            books_data.append({
+                'id': book.id,
+                'cover_image_url': book.cover_image.url if book.cover_image else '',
+                'title': book.title,
+                'author': book.author,
+                'category_name': book.category.name if book.category else '',
+                'subcategory_name': book.subcategory.name if book.subcategory else '',
+                'isbn': isbn,
+                'date_added': book.timestamp,
                 'category_class': category_class,
-                'isbn_formatted': isbn
             })
         categories = Category.objects.all()
-        return render(request, 'librarian/librarian-books.html', {'user': user, 'title': title, 'subtitle': subtitle, 'categories': categories, 'all_books': all_books, 'all_books_list_styles': all_books_list_styles})
+        return render(request, 'librarian/librarian-books.html', {'user': user, 'title': title, 'subtitle': subtitle, 'categories': categories, 'books_data': books_data})
     else:
         return redirect('login')
 

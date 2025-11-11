@@ -25,69 +25,55 @@
             <!-- Chips / Filters -->
             <div class="flex gap-4">
                 <select class="rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark">
-                <option>All Categories</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
+                    <option>All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
         <!-- Table -->
         <div class="bg-[#111a22] rounded-xl shadow-lg overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="w-full text-left" id="books-table">
                     <thead>
                         <tr class="bg-[#192633]">
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                Cover</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                Title &amp; Author</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                Category</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                Subcategory</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                ISBN</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">
-                                Date Uploaded</th>
-                            <th
-                                class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">
-                                Actions</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">Cover</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">Title &amp; Author</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">Subcategory</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">ISBN</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider">Date Uploaded</th>
+                            <th class="px-6 py-4 text-white text-sm font-bold uppercase tracking-wider text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-[#324d67]">
-                        {% for book_styles in all_books_list_styles %}
-                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors">
+                        {% for book in books_data %}
+                        <tr class="hover:bg-gray-200 dark:hover:bg-gray-800/40 transition-colors book-row">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-md w-12 h-16"
                                     data-alt="Book cover for The Midnight Library"
-                                    style='background-image: url("{{ book_styles.book.cover_image.url }}");'>
+                                    style='background-image: url("{{ book.cover_image_url }}");'>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-semibold text-black dark:text-white">{{ book_styles.book.title }}</div>
-                                <div class="text-sm text-gray-600 dark:text-secondary-text">{{ book_styles.book.author }}</div>
+                                <div class="text-sm font-semibold text-black dark:text-white">{{ book.title }}</div>
+                                <div class="text-sm text-gray-600 dark:text-secondary-text">{{ book.author }}</div>
                             </td>
                             <td
-                                class="{{ book_styles.category_class }}">
-                                {{ book_styles.book.category.name }}</td>
+                                class="{{ book.category_class }}">
+                                {{ book.category_name }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                {{ book_styles.book.subcategory.name }}</td>
+                                {{ book.subcategory_name }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-secondary-text">
-                                {{ book_styles.isbn_formatted }}</td>
+                                {{ book.isbn }}</td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-sm text-black dark:text-white text-center">
-                                {{ book_styles.book.timestamp }}</td>
+                                {{ book.date_added }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <button class="text-primary hover:text-blue-500 p-2" data-edit-book data-book-id="{{ book_styles.book.id }}">
+                                <button class="text-primary hover:text-blue-500 p-2" data-edit-book data-book-id="{{ book.id }}">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
                             </td>
@@ -99,17 +85,10 @@
         </div>
         <!-- Pagination -->
         <div class="flex justify-between items-center mt-6">
-            <span class="text-sm text-[#92adc9]">Showing 1 to 5 of 50 entries</span>
+            <span class="text-sm text-[#92adc9]" id="pagination-info"></span>
             <div class="flex items-center gap-2">
-                <button
-                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">Previous</button>
-                <button class="px-3 py-1 rounded-lg bg-primary text-white text-sm">1</button>
-                <button
-                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">2</button>
-                <button
-                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">3</button>
-                <button
-                    class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm">Next</button>
+                <button class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm pagination-prev">Previous</button>
+                <button class="px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm pagination-next">Next</button>
             </div>
         </div>
     </div>
@@ -119,10 +98,97 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // --- Custom Table Logic --- //
+    const table = document.getElementById('books-table');
+    const tableBody = table.querySelector('tbody');
+    const allRows = Array.from(tableBody.querySelectorAll('tr.book-row'));
+    const searchInput = document.getElementById('book-search-input');
+    const categoryFilter = document.querySelector('select');
+    const paginationInfo = document.getElementById('pagination-info');
+    const prevButton = document.querySelector('.pagination-prev');
+    const nextButton = document.querySelector('.pagination-next');
+    const pageButtonsContainer = nextButton.parentElement;
+
+    let currentPage = 1;
+    const rowsPerPage = 5;
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const categoryId = categoryFilter.value;
+
+        let filteredRows = allRows.filter(row => {
+            const title = row.cells[1].textContent.toLowerCase();
+            const isbn = row.cells[4].textContent.toLowerCase();
+            const categoryCell = row.cells[2];
+
+            const matchesSearch = title.includes(searchTerm) || isbn.includes(searchTerm);
+            const matchesCategory = categoryFilter.options[categoryFilter.selectedIndex].text === 'All Categories' || categoryCell.dataset.categoryId === categoryId;
+
+            return matchesSearch && matchesCategory;
+        });
+
+        renderTable(filteredRows);
+    }
+
+    function renderTable(rowsToRender) {
+        tableBody.innerHTML = '';
+        const totalRows = rowsToRender.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedItems = rowsToRender.slice(start, end);
+
+        paginatedItems.forEach(row => tableBody.appendChild(row));
+
+        updatePagination(totalRows, totalPages);
+    }
+
+    function updatePagination(totalRows, totalPages) {
+        const startEntry = totalRows > 0 ? (currentPage - 1) * rowsPerPage + 1 : 0;
+        const endEntry = Math.min(currentPage * rowsPerPage, totalRows);
+        paginationInfo.textContent = `Showing ${startEntry} to ${endEntry} of ${totalRows} entries`;
+
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages || totalPages === 0;
+
+        const existingPageButtons = pageButtonsContainer.querySelectorAll('.pagination-page');
+        existingPageButtons.forEach(btn => btn.remove());
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.className = 'px-3 py-1 rounded-lg bg-[#192633] hover:bg-[#233648] text-white text-sm pagination-page';
+            if (i === currentPage) {
+                pageButton.classList.add('bg-primary');
+            } else {
+                pageButton.classList.remove('bg-primary');
+            }
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                applyFilters();
+            });
+            pageButtonsContainer.insertBefore(pageButton, nextButton);
+        }
+    }
+
+    searchInput.addEventListener('keyup', () => { currentPage = 1; applyFilters(); });
+    categoryFilter.addEventListener('change', () => { currentPage = 1; applyFilters(); });
+    prevButton.addEventListener('click', () => { if (currentPage > 1) { currentPage--; applyFilters(); } });
+    nextButton.addEventListener('click', () => { 
+        const totalPages = Math.ceil(allRows.filter(row => row.style.display !== 'none').length / rowsPerPage);
+        if (currentPage < totalPages) { 
+            currentPage++; 
+            applyFilters(); 
+        }
+    });
+
+    // Initial render
+    applyFilters();
+
+    // --- Modal Logic --- //
     const modal = document.getElementById('set-subcategory-modal');
     const closeModalBtn = document.getElementById('close-subcategory-modal');
-    const bookTableBody = document.querySelector('tbody');
-
     const modalBookTitle = document.getElementById('modal-book-title');
     const modalBookAuthor = document.getElementById('modal-book-author');
     const modalBookCategory = document.getElementById('modal-book-category');
@@ -130,33 +196,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const subcategorySelect = document.getElementById('subcategory-select');
     const subcategoryForm = document.getElementById('set-subcategory-form');
 
-    if (!bookTableBody) return;
+    if (!tableBody) return;
 
-    // --- Open Modal --- //
-    bookTableBody.addEventListener('click', function (event) {
+    tableBody.addEventListener('click', function (event) {
         const editButton = event.target.closest('[data-edit-book]');
         if (editButton) {
             const bookId = editButton.dataset.bookId;
             const editUrl = `{% url 'edit-book' 0 %}`.replace('0', bookId);
 
-            // 1. Fetch book data
             fetch(editUrl)
                 .then(response => response.json())
                 .then(bookData => {
-                    // 2. Populate modal with book data
                     modalBookTitle.textContent = bookData.title;
                     modalBookAuthor.textContent = `by ${bookData.author}`;
                     modalBookCategory.textContent = `Category: ${bookData.category}`;
                     modalBookCover.style.backgroundImage = `url(${bookData.cover})`;
-                    subcategoryForm.action = editUrl; // Set form action URL
+                    subcategoryForm.action = editUrl;
 
-                    // 3. Fetch subcategories for the book's category
                     return fetch(`/books/subcategory/?category=${bookData.category_id}`);
                 })
                 .then(response => response.json())
                 .then(subcategories => {
-                    // 4. Populate subcategory dropdown
-                    subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>'; // Clear existing options
+                    subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
                     subcategories.forEach(sub => {
                         const option = document.createElement('option');
                         option.value = sub.id;
@@ -164,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         subcategorySelect.appendChild(option);
                     });
 
-                    // 5. Show the modal
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 })
@@ -175,13 +235,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // --- Close Modal --- //
     closeModalBtn.addEventListener('click', () => {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     });
 
-    // Close modal if clicking outside of it
     modal.addEventListener('click', function (event) {
         if (event.target === modal) {
             modal.classList.add('hidden');
@@ -189,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // --- Form Submission --- //
     subcategoryForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -206,10 +263,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json().then(data => ({ status: response.status, body: data })))
         .then(data => {
             if (data.status === 200) {
-                // NotifyX.success(data.body.message, { duration: 3000, theme: 'dark' });
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                location.reload(); // Reload to see the changes
+                location.reload();
             } else {
                 NotifyX.error(data.body.error, { duration: 3000, theme: 'dark' });
             }
