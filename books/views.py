@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Book, Category, SubCategory
+from accounts.models import userLibrary
 from .forms import CategoryForm, BookForm, SubcategoryForm, BookSubcategoryForm
+from accounts.helpers import book_btn_on_price
 from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
@@ -32,6 +34,41 @@ def books_subcategory_view(request):
 
     data = list(subcategories.values('id','name'))  # Serialize to a list of dictionaries
     return JsonResponse(data, safe=False)
+
+def book_details_view(request, book_id):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        title = "Book Details"
+        subtitle = "All the information about the selected book."
+        book = Book.objects.get(id=book_id)
+        _, book_action_btn, icon = book_btn_on_price(book.price)
+        data = {
+            'id': book.id,
+            'title': book.title,
+            'description': book.description,
+            'author': book.author,
+            'category': book.category.name,
+            'category_id': book.category.id,
+            'subcategory': book.subcategory.name,
+            'subcategory_id': book.subcategory.id,
+            'publisher': book.publisher,
+            'publication_date': book.publication_date,
+            'isbn': book.isbn,
+            'pages': book.total_pages,
+            'cover': book.cover_image.url,
+            'price': book.price,
+            'date_created': book.timestamp,
+            'file': book.pdf_link.url,
+            'action_btn': {
+                'text': book_action_btn,
+                'icon': icon
+            },
+        }
+        return render(request, 'app/book-details.html', {'user': user, 'book_data': data, 'title': title, 'subtitle': subtitle})
+    else:
+        return redirect('login')    
+   
+    
 
 def delete_subcategory_view(request, subcategory_id):
     try:
@@ -123,3 +160,19 @@ def remove_trending_view(request, book_id):
 
 
 
+### read book view ###
+def read_book_view(request, book_id):
+    book = Book.objects.get(id=book_id)
+    user = request.user
+
+    book_type = request.GET.get('book_type')
+
+    if book_type:
+        # Check if the book is already in the user's library, and if not, add it.
+        user_library_entry, created = userLibrary.objects.get_or_create(user=user, book=book, defaults={'book_type': book_type})
+
+        if created:
+            return JsonResponse({'message': 'Book added to your library successfully!', 'open_book_url': book.pdf_link.url}, status=200)
+        else:
+            return JsonResponse({'error': 'Book already in your library!'}, status=400)
+    return JsonResponse({'title': book.title}, status=200)

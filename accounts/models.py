@@ -1,6 +1,7 @@
 from enum import unique
 from django.db import models
-
+from books.models import Book
+from django.utils import timezone
 # Create your models here.
 class EldergateLibraryUser(models.Model):
     id = models.AutoField(primary_key=True)
@@ -22,4 +23,16 @@ class EldergateLibraryUser(models.Model):
         choices=USER_TYPE_CHOICES,
         default='Reader',
     )
+    current_reading = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
+    reading_progress = models.IntegerField(default=0)
 
+class userLibrary(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(EldergateLibraryUser, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
+    book_type = models.CharField(max_length=100, null=True, blank=True)
+    time_read = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+
+
+    

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import ReaderSignUpForm, ReaderProfileEditForm, LibrarianSignUpForm
-from .models import EldergateLibraryUser
+from .models import EldergateLibraryUser, userLibrary
 from books.models import Category, Book
 from . import helpers
 from django.http import JsonResponse
@@ -50,6 +50,7 @@ def dashboard_view(request):
         for trending_book in trending_books:
             style_class, style_text, style_book_type = helpers.get_book_type_from_price('reader', trending_book.price)
             category_class = helpers.user_category_class(trending_book.category.name)
+            _, action_btn, ico = helpers.book_btn_on_price(trending_book.price)
             trending_books_data.append({
                 'id': trending_book.id,
                 'title': trending_book.title,
@@ -62,6 +63,7 @@ def dashboard_view(request):
                     'text': style_text,
                     'status': style_book_type
                 },
+                'action_btn': action_btn,
                 'category_class': category_class
             })
         return render(request, 'app/dashboard.html', {'user': user, 'title': title, 'subtitle': subtitle, 'filter_category': filter_category, 'trending_books_data': trending_books_data})
@@ -70,9 +72,14 @@ def dashboard_view(request):
 def library_view(request):
     if request.session.get('is_authenticated'):
         user = request.user
+        user_library = userLibrary.objects.filter(user=user)
+       
+        my_free_books = user_library.filter(book_type='free')
+
+        my_purchased_books = user_library.filter(book_type='paid')
         title = "Library"
         subtitle = "Access your saved books here."
-        return render(request, 'app/library.html', {'user': user, 'title': title, 'subtitle': subtitle})
+        return render(request, 'app/library.html', {'user': user, 'title': title, 'subtitle': subtitle, 'my_free_books': my_free_books, 'my_purchased_books': my_purchased_books})
     else:
         return redirect('login')
 def orders_view(request):

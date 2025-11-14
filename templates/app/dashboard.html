@@ -84,11 +84,12 @@
                 {% for book in trending_books_data %}
                 <tr class="text-sm text-text-light dark:text-text-dark">
                     <td class="p-4 flex items-center">
-                        
-                        <img alt="Book cover for {{ book.title }}"
-                            class="w-8 h-12 object-cover rounded-sm mr-4"
-                            src="{{ book.cover_image.url }}" />
-                        {{ book.title }}
+                        <a href="{% url 'book-details' book.id %}">
+                            <img alt="Book cover for {{ book.title }}"
+                                class="w-8 h-12 object-cover rounded-sm mr-4"
+                                src="{{ book.cover_image.url }}" />
+                        </a>
+                        <a href="{% url 'book-details' book.id %}">{{ book.title }}</a>
                     </td>
                     <td class="p-4">{{ book.author }}</td>
                     <td class="p-4"><span
@@ -97,8 +98,7 @@
                     <td class="p-4 text-subtext-light dark:text-subtext-dark">{{ book.price_style.status }}</td>
                     <td class="{{ book.price_style.class }}">{{ book.price_style.text }}</td>
                     <td class="p-4"><button
-                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors">Buy
-                            now</button></td>
+                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-blue-500 transition-colors">{{ book.action_btn }}</button></td>
                 </tr>
                 {% empty %}
                 <tr>

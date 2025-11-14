@@ -74,6 +74,7 @@ def librarian_book_management_category(category):
     
     return class_sheet
 
+#Misc
 def isbn_formatter(isbn_string):
     """
     Formats a 13-digit ISBN string into a standard hyphenated format.
@@ -90,3 +91,15 @@ def isbn_formatter(isbn_string):
         isbn_string[12:13]
     ]
     return "-".join(parts)
+
+def book_btn_on_price(price):
+    if price == 0:
+        class_sheet = "border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors"
+        text = "Read now"
+        icon = "book"
+    else:
+        class_sheet = "border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-white transition-colors"
+        text = "Buy now"
+        icon = "shopping_cart_checkout"
+
+    return class_sheet, text, icon

@@ -121,36 +121,23 @@
         <section class="mt-12 px-8 py-8">
           <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">My Free Books</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for book in my_free_books %}
             <div
               class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
               <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
-                data-alt="Book cover for Pride and Prejudice"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7o1GPaOSYv9fZcYX0fAaBC42j8uWizcFnaswRLd3jrqsQCO5Yp9pzIGbAiJ22qirs6jvKFWayBPHztUvhYiC32R8U1N6xtQ9v22OQAvGymIkBRPlYIX6l9xuEht4jnvUoy_d1quF7AtqJIfXbQBwNzoINot0Yk5rOB0t1iv5iVIP6PidADUJquV-e0iJgEYTJ-1Cn-f2Q82oeP5LpyJo2BbAAG_mecMP8YlDKblk6skoIljOon6B-y_gbOp9NHtutLYunkOvb_4bG");'>
+                data-alt="Book cover for {{ book.title }}"
+                style='background-image: url("{{ book.cover_image.url }}");'>
               </div>
               <div class="flex flex-col gap-1 flex-grow">
-                <p class="text-slate-50 text-base font-bold leading-tight">Pride and Prejudice</p>
-                <p class="text-slate-400 text-sm font-normal leading-normal">Jane Austen</p>
+                <p class="text-slate-50 text-base font-bold leading-tight">{{ book.title }}</p>
+                <p class="text-slate-400 text-sm font-normal leading-normal">{{ book.author }}</p>
               </div>
               <button
                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="truncate">Start Reading</span>
+                <span class="truncate">Read Now</span>
               </button>
             </div>
-            <div
-              class="flex flex-col gap-4 rounded-lg bg-card-dark p-4 border border-border-dark group hover:scale-105 transition-transform duration-300 hover:border-primary">
-              <div class="w-full bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg"
-                data-alt="Book cover for The Great Gatsby"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDUODQGbZi5TxSH3nMeJ7oTojJw9m4kdOlBwPMukxxB2HUYUCBYtHL1mcHK-J5Ivhozd9CAKu3ZpustIsrbdI4LieWVc10LyXTXbfBRZu3pWxYqY8rAMWGPvu2XTOkoxB63pmnIMb4lRixcEqVCqOX_k-rO-atUzqtwIerlznwi-JkHCehD1lFgRRA563E2KXOgw2nLpbF4yS0DKkoaTIxt0qo0C5oqrSKDFRiu_M4H04vr1-rBAMqclVne_pusm_XRZPJDXFbRkuFT");'>
-              </div>
-              <div class="flex flex-col gap-1 flex-grow">
-                <p class="text-slate-50 text-base font-bold leading-tight">The Great Gatsby</p>
-                <p class="text-slate-400 text-sm font-normal leading-normal">F. Scott Fitzgerald</p>
-              </div>
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/30 text-slate-50 text-sm font-medium leading-normal w-full group-hover:bg-primary group-hover:text-white transition-colors">
-                <span class="truncate">Start Reading</span>
-              </button>
-            </div>
+            {% endfor %}
           </div>
         </section>
         <div class="text-center py-20 hidden">
