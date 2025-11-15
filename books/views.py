@@ -172,7 +172,7 @@ def read_book_view(request, book_id):
         user_library_entry, created = userLibrary.objects.get_or_create(user=user, book=book, defaults={'book_type': book_type})
 
         if created:
-            return JsonResponse({'message': 'Book added to your library successfully!', 'open_book_url': book.pdf_link.url}, status=200)
+            return JsonResponse({'message': 'Book added to your library successfully!', 'open_book_url': reverse('pdf-viewer', args=[book.id])}, status=200)
         else:
             return JsonResponse({'error': 'Book already in your library!'}, status=400)
     return JsonResponse({'title': book.title}, status=200)

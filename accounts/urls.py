@@ -17,4 +17,6 @@ urlpatterns = [
     path('admin-edit-librarian/<int:librarian_id>/', views.admin_edit_librarian_view, name='admin-edit-librarian'),
     path('admin-delete-librarian/<int:librarian_id>/', views.admin_delete_librarian_view, name='admin-delete-librarian'),
     path('logout/', views.logout_view, name='logout'),
+    path('pdf-viewer/<int:book_id>/', views.pdf_reader_view, name='pdf-viewer'),
+    path('update-progress/', views.update_reading_progress, name='update-progress'),
 ]

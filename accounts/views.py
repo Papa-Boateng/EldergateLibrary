@@ -73,13 +73,60 @@ def library_view(request):
     if request.session.get('is_authenticated'):
         user = request.user
         user_library = userLibrary.objects.filter(user=user)
+
+        current_reading_book = Book.objects.get(id=user.current_reading.id)
+        reading_progress_percentage = round(user.reading_progress / current_reading_book.total_pages * 100)
        
         my_free_books = user_library.filter(book_type='free')
-
         my_purchased_books = user_library.filter(book_type='paid')
+
+        my_free_books_data = []
+        my_purchased_books_data = []
+
+        for book in my_free_books:
+            my_free_books_data.append({
+                'id': book.book.id,
+                'title': book.book.title,
+                'author': book.book.author,
+                'category': book.book.category.name,
+                'price': book.book.price,
+                'cover_image': book.book.cover_image,
+                'price_style': {
+                    'class': 'text-green-500',
+                    'text': 'Free',
+                    'status': 'free'
+                },
+                'action_btn': 'Read Now',
+                'category_class': 'bg-green-500'
+            })
+        for book in my_purchased_books:
+            my_purchased_books_data.append({
+                'id': book.book.id,
+                'title': book.book.title,
+                'author': book.book.author,
+                'category': book.book.category.name,
+                'price': book.book.price,
+                'cover_image': book.book.cover_image,
+                'price_style': {
+                    'class': 'text-green-500',
+                    'text': 'Free',
+                    'status': 'free'
+                },
+                'action_btn': 'Read Now',
+                'category_class': 'bg-green-500'
+            })
+        
         title = "Library"
         subtitle = "Access your saved books here."
-        return render(request, 'app/library.html', {'user': user, 'title': title, 'subtitle': subtitle, 'my_free_books': my_free_books, 'my_purchased_books': my_purchased_books})
+        return render(request, 'app/library.html', {
+            'user': user, 
+            'title': title, 
+            'subtitle': subtitle, 
+            'my_free_books': my_free_books_data, 
+            'my_purchased_books': my_purchased_books_data, 
+            'current_reading_book': current_reading_book,
+            'reading_progress_pt': reading_progress_percentage
+            })
     else:
         return redirect('login')
 def orders_view(request):
@@ -286,4 +333,29 @@ def logout_view(request):
         del request.session['is_authenticated']
     logout(request)
     return redirect('login')
+
+
+###Pdf Reader View###
+def pdf_reader_view(request, book_id):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        book = Book.objects.get(id=book_id)
+        if user.current_reading != book:
+            user.current_reading = book
+            user.reading_progress = 1
+            user.save()
+        return render(request, 'app/pdf-reader.html', {'book': book})
+    else:
+        return redirect('login')
+
+def update_reading_progress(request):
+    if request.method == 'POST' and request.session.get('is_authenticated'):
+        user = request.user
+        book_id = request.POST.get('book_id')
+        page_num = int(request.POST.get('page_num'))
+        if page_num > user.reading_progress:
+            user.reading_progress = page_num
+            user.save()
+            return JsonResponse({'status': 'success', 'message': 'Progress updated.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 

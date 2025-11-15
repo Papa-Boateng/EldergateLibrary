@@ -82,8 +82,6 @@
 
             const readBookEndpoint = readBookEndpointTemplate.replace('0', bookId).replace('dtype', 'free');
 
-            console.log(readBookEndpoint);
-
             fetch(readBookEndpoint)
             .then(response => response.json())
             .then(data => {
@@ -92,7 +90,7 @@
                     window.location.href = data.open_book_url;
                 }
                 else {
-                    NotifyX.error(data.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                    NotifyX.warning(data.error, { duration: 3000, dismissible: true, theme: 'dark' });
                 }
             })
             
