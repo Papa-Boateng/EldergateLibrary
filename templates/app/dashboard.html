@@ -98,7 +98,7 @@
                     <td class="p-4 text-subtext-light dark:text-subtext-dark">{{ book.price_style.status }}</td>
                     <td class="{{ book.price_style.class }}">{{ book.price_style.text }}</td>
                     <td class="p-4"><button
-                            class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-blue-500 transition-colors">{{ book.action_btn }}</button></td>
+                        class="border border-primary text-primary py-1 px-4 rounded-full text-sm font-semibold hover:bg-primary hover:text-blue-500 transition-colors" data-action-btn data-action-text="{{ book.action_btn }}" data-book-id="{{ book.id }}">{{ book.action_btn }}</button></td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -109,4 +109,42 @@
         </table>
     </div>
 </section>
+
+<script>
+    const actionBtn = document.querySelectorAll('[data-action-btn]');
+    const actionText = document.querySelectorAll('[data-action-text]');
+    const bookId = document.querySelectorAll('[data-book-id]');
+    const readBookEndpointTemplate = "{% url 'read-book' 0 %}?book_type=dtype";
+
+    actionBtn.forEach(btn => {
+        btn.addEventListener('click', function() {
+        
+        if (btn.textContent === 'Read now') {
+            btn.textContent = 'Processing...';
+
+            const readBookEndpoint = readBookEndpointTemplate.replace('0', btn.dataset.bookId).replace('dtype', 'free');
+
+            fetch(readBookEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Book added to your library successfully!') {
+                    btn.textContent = 'Added to Library';
+                    window.location.href = data.open_book_url;
+                }
+                else {
+                    NotifyX.warning(data.warning, { duration: 3000, dismissible: true, theme: 'dark' });
+                    setTimeout(() => {
+                        btn.textContent = 'Read now';
+                    }, 3000);
+
+                }
+            })
+            
+        } else {
+            btn.textContent = 'Added to Cart';
+        }
+    })
+    })
+</script>
+
 {% endblock %}

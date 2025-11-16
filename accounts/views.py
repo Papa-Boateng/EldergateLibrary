@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import ReaderSignUpForm, ReaderProfileEditForm, LibrarianSignUpForm
-from .models import EldergateLibraryUser, userLibrary
+from .models import EldergateLibraryUser, userLibrary, Cart, CartItem
 from books.models import Category, Book
 from . import helpers
 from django.http import JsonResponse
@@ -359,3 +359,32 @@ def update_reading_progress(request):
             return JsonResponse({'status': 'success', 'message': 'Progress updated.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 
+
+####Cart Views####
+def cart_view(request):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        cart = user.cart
+        cart_items = cart.items.all()
+        return render(request, 'app/cart.html', {'user': user, 'cart': cart, 'cart_items': cart_items})
+    else:
+        return redirect('login')
+
+def add_to_cart(request, book_id):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        book = Book.objects.get(id=book_id)
+        cart = user.cart
+        cart_item = CartItem.objects.create(cart=cart, book=book)
+        return JsonResponse({'status': 'success', 'message': 'Book added to cart.'})
+    else:
+        return redirect('login')
+
+def remove_from_cart(request, item_id):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        cart_item = CartItem.objects.get(id=item_id)
+        cart_item.delete()
+        return JsonResponse({'status': 'success', 'message': 'Book removed from cart.'})
+    else:
+        return redirect('login')

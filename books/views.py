@@ -174,5 +174,5 @@ def read_book_view(request, book_id):
         if created:
             return JsonResponse({'message': 'Book added to your library successfully!', 'open_book_url': reverse('pdf-viewer', args=[book.id])}, status=200)
         else:
-            return JsonResponse({'error': 'Book already in your library!'}, status=400)
+            return JsonResponse({'warning': 'Book already in your library!'}, status=201)
     return JsonResponse({'title': book.title}, status=200)
