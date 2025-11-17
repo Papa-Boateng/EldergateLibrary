@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block title %}Your Cart - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    {% csrf_token %}
+    <div class="flex min-w-72 flex-col gap-3 mb-8">
+        <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Your Cart</h1>
+        <p class="text-white/60 text-base font-normal leading-normal">You have <span id="cart-item-count">{{ cart_items_count }}</span> items in your cart.</p>
+    </div>
+
+    <div id="cart-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start {% if not cart_items %}hidden{% endif %}">
+        <div class="lg:col-span-2 flex flex-col gap-4">
+            <div id="cart-items-container" class="flex flex-col border border-white/10 rounded-xl divide-y divide-white/10">
+                {% for item in cart_items %}
+                <div class="flex flex-col sm:flex-row gap-4 bg-transparent p-4 justify-between items-center cart-list-item">
+                    <div class="flex items-start gap-4 w-full">
+                        <div class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-lg w-20 flex-shrink-0"
+                            style='background-image: url("{{ item.book.cover_image.url }}");'>
+                        </div>
+                        <div class="flex flex-1 flex-col justify-center gap-1">
+                            <p class="text-white text-base font-medium leading-normal">{{ item.book.title }}</p>
+                            <p class="text-white/60 text-sm font-normal leading-normal">{{ item.book.author }}</p>
+                            <p class="text-white text-sm font-bold leading-normal pt-1">${{ item.book.price }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between w-full sm:w-auto sm:justify-end gap-4">
+                        <button class="text-white/60 hover:text-white transition-colors">
+                            <span class="material-symbols-outlined" data-remove-cart-btn data-item-id="{{ item.id }}">delete</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="lg:col-span-1">
+            <div class="sticky top-10 flex flex-col gap-6 bg-white/5 border border-white/10 rounded-xl p-6">
+                <h3 class="text-white text-xl font-bold">Order Summary</h3>
+                <div class="flex flex-col gap-3 border-b border-white/10 pb-6">
+                    <div class="flex justify-between items-center">
+                        <p class="text-white/60 text-sm">Subtotal</p>
+                        <p id="subtotal-price" class="text-white text-sm font-medium">${{ total_price }}</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-white/60 text-sm">Discount</p>
+                        <p class="text-white text-sm font-medium">-${{ discount }}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <p class="text-white/80 text-base font-bold">Total</p>
+                    <p id="total-price" class="text-white text-xl font-bold">${{ total_price }}</p>
+                </div>
+                <p class="text-center text-white/40 text-xs">Shipping &amp; taxes calculated at checkout.</p>
+                <a href="{% url 'checkout' %}"
+                    class="w-full flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-colors">
+                    Proceed to Checkout
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div id="empty-cart-message" class="flex flex-col items-center justify-center text-center py-20 {% if cart_items %}hidden{% endif %}">
+        <span class="material-symbols-outlined text-6xl text-primary mb-4">shopping_cart_off</span>
+        <h2 class="text-2xl font-bold text-white mb-2">Your Cart is Empty</h2>
+        <p class="text-white/60 mb-6">Looks like you haven't added any books yet.</p>
+        <a href="{% url 'dashboard' %}" class="flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-colors">
+            Explore the Library
+        </a>
+    </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const removeCartButtons = document.querySelectorAll('[data-remove-cart-btn]');
+    const removeCartUrlTemplate = '{% url "remove-from-cart" 0 %}';
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    removeCartButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const itemId = btn.dataset.itemId;
+            const removeCartUrl = removeCartUrlTemplate.replace('0', itemId);
+
+            fetch(removeCartUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const itemElement = btn.closest('.cart-list-item');
+                    if (itemElement) {
+                        itemElement.remove();
+                    }
+
+                    const cartItemsContainer = document.getElementById('cart-items-container');
+                    const remainingItems = cartItemsContainer.querySelectorAll('.cart-list-item').length;
+                    document.getElementById('cart-item-count').textContent = remainingItems;
+
+                    // Update the total and subtotal prices
+                    document.getElementById('subtotal-price').textContent = `$${data.new_total}`;
+                    document.getElementById('total-price').textContent = `$${data.new_total}`;
+
+                    if (remainingItems === 0) {
+                        document.getElementById('cart-content').classList.add('hidden');
+                        document.getElementById('empty-cart-message').classList.remove('hidden');
+                    }
+                } else {
+                    console.error('Failed to remove item:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error removing book from cart:', error);
+            });
+        });
+    });
+});
+</script>
+
+{% endblock %}

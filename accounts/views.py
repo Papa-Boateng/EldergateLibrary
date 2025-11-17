@@ -5,6 +5,7 @@ from .models import EldergateLibraryUser, userLibrary, Cart, CartItem
 from books.models import Category, Book
 from . import helpers
 from django.http import JsonResponse
+from decimal import Decimal
 
 # Create your views here.
 ####Authentication Views####
@@ -51,7 +52,8 @@ def dashboard_view(request):
             style_class, style_text, style_book_type = helpers.get_book_type_from_price('reader', trending_book.price)
             category_class = helpers.user_category_class(trending_book.category.name)
             _, action_btn, ico = helpers.book_btn_on_price(trending_book.price)
-            trending_books_data.append({
+            if trending_book.subcategory:
+                trending_books_data.append({
                 'id': trending_book.id,
                 'title': trending_book.title,
                 'author': trending_book.author,
@@ -65,7 +67,7 @@ def dashboard_view(request):
                 },
                 'action_btn': action_btn,
                 'category_class': category_class
-            })
+                })
         return render(request, 'app/dashboard.html', {'user': user, 'title': title, 'subtitle': subtitle, 'filter_category': filter_category, 'trending_books_data': trending_books_data})
     else:
         return redirect('login')
@@ -74,8 +76,15 @@ def library_view(request):
         user = request.user
         user_library = userLibrary.objects.filter(user=user)
 
-        current_reading_book = Book.objects.get(id=user.current_reading.id)
-        reading_progress_percentage = round(user.reading_progress / current_reading_book.total_pages * 100)
+        if user.current_reading:
+            current_reading_book = Book.objects.get(id=user.current_reading.id)
+            if current_reading_book.total_pages > 0:
+                reading_progress_percentage = round(user.reading_progress / current_reading_book.total_pages * 100)
+            else:
+                reading_progress_percentage = 0
+        else:
+            current_reading_book = None
+            reading_progress_percentage = 0
        
         my_free_books = user_library.filter(book_type='free')
         my_purchased_books = user_library.filter(book_type='paid')
@@ -364,9 +373,29 @@ def update_reading_progress(request):
 def cart_view(request):
     if request.session.get('is_authenticated'):
         user = request.user
-        cart = user.cart
+        cart, created = Cart.objects.get_or_create(user=user)
         cart_items = cart.items.all()
-        return render(request, 'app/cart.html', {'user': user, 'cart': cart, 'cart_items': cart_items})
+
+        cart_items_count = cart_items.count()
+
+        
+        # Calculate total price
+        total_price = sum(item.book.price for item in cart_items)
+
+        discount = 0.00
+        
+        return render(request, 'app/cart.html', {
+            'user': user, 
+            'cart': cart, 
+            'cart_items': cart_items,
+            'total_price': f'{total_price:.2f}',
+            'discount': f'{discount:.2f}',
+            'cart_items_count': cart_items_count
+        })
+
+        # for item in cart_items:
+        #     print(item.book.title)
+
     else:
         return redirect('login')
 
@@ -374,17 +403,51 @@ def add_to_cart(request, book_id):
     if request.session.get('is_authenticated'):
         user = request.user
         book = Book.objects.get(id=book_id)
-        cart = user.cart
-        cart_item = CartItem.objects.create(cart=cart, book=book)
+        cart, created = Cart.objects.get_or_create(user=user)
+        
+        # Check if the item is already in the cart
+        cart_item, item_created = CartItem.objects.get_or_create(cart=cart, book=book)
+        
+        if not item_created:
+            return JsonResponse({'status': 'info', 'message': 'Book is already in your cart.'})
+
         return JsonResponse({'status': 'success', 'message': 'Book added to cart.'})
     else:
-        return redirect('login')
+        return JsonResponse({'status': 'error', 'message': 'You must be logged in to add items to your cart.'}, status=401)
 
 def remove_from_cart(request, item_id):
+    if request.method == 'POST' and request.session.get('is_authenticated'):
+        user = request.user
+        try:
+            cart_item = CartItem.objects.get(id=item_id, cart__user=user)
+            cart_item.delete()
+
+            # Recalculate the total price
+            cart = user.cart
+            remaining_items = cart.items.all()
+            total_price = sum(item.book.price for item in remaining_items)
+
+            return JsonResponse({
+                'status': 'success', 
+                'message': 'Book removed from cart.',
+                'new_total': f'{total_price:.2f}'
+            })
+        except CartItem.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Item not found in your cart.'}, status=404)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
+
+
+def checkout_view(request):
     if request.session.get('is_authenticated'):
         user = request.user
-        cart_item = CartItem.objects.get(id=item_id)
-        cart_item.delete()
-        return JsonResponse({'status': 'success', 'message': 'Book removed from cart.'})
+        cart, created = Cart.objects.get_or_create(user=user)
+        cart_items = cart.items.all()   
+
+        total_price = sum(item.book.price for item in cart_items)
+        tax = (total_price * Decimal('0.10')).quantize(Decimal('0.01'))
+        final_total = total_price + tax
+
+        return render(request, 'app/checkout.html', {'user': user, 'cart': cart, 'cart_items': cart_items, 'total_price': total_price, 'tax': tax, 'final_total': final_total})
     else:
         return redirect('login')
+        

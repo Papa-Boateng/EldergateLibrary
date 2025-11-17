@@ -1,0 +1,230 @@
+{% extends 'layout.html' %}
+
+{% block title %}Book Details - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col gap-8">
+        <div class="flex flex-wrap gap-2">
+            <a class="text-white/60 hover:text-white/90 font-display text-sm font-medium leading-normal"
+                href="{% url 'cart' %}">Cart</a>
+            <span class="text-white/60 font-display text-sm font-medium leading-normal">/</span>
+            <a class="text-white font-display text-sm font-medium leading-normal" href="{% url 'checkout' %}">Checkout</a>
+            <span class="text-white/60 font-display text-sm font-medium leading-normal">/</span>
+            <span class="text-white/60 font-display text-sm font-medium leading-normal">Confirmation</span>
+        </div>
+        <div class="flex flex-wrap justify-between gap-3 items-baseline">
+            <p
+                class="text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72 font-display">
+                Secure Checkout</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            <!-- Left Side: Forms -->
+            <div class="lg:col-span-2 flex flex-col gap-10">
+                <!-- Billing Address -->
+                <section>
+                    <h2
+                        class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5 font-display">
+                        Billing Address</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+                        <div class="sm:col-span-2">
+                            <label class="flex flex-col w-full">
+                                <p
+                                    class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                    Full Name</p>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-[#192633] h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                    placeholder="Enter your full name" value="" />
+                            </label>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="flex flex-col w-full">
+                                <p
+                                    class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                    Address Line</p>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-[#192633] h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                    placeholder="123 Knowledge Ln" value="" />
+                            </label>
+                        </div>
+                        <div>
+                            <label class="flex flex-col w-full">
+                                <p
+                                    class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                    City</p>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-[#192633] h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                    placeholder="Bookville" value="" />
+                            </label>
+                        </div>
+                        <div>
+                            <label class="flex flex-col w-full">
+                                <p
+                                    class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                    State</p>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-[#192633] h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                    placeholder="CA" value="" />
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <!-- Payment Method -->
+                <section>
+                    <h2
+                        class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5 font-display">
+                        Payment Information</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="rounded-lg border border-white/20 p-5 bg-[#192633]">
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center gap-4 cursor-pointer" for="creditCard">
+                                    <input checked=""
+                                        class="form-radio h-4 w-4 bg-transparent border-white/40 text-primary focus:ring-primary"
+                                        id="creditCard" name="paymentMethod" type="radio" />
+                                    <span
+                                        class="text-white/90 font-display text-sm font-medium">Credit/Debit
+                                        Card</span>
+                                </label>
+                                <div class="flex items-center gap-2">
+                                    <img class="h-6" data-alt="Visa logo"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuANy6T-ds06Vv2IunaOhhQhUfxRNHjJDb0UZX3HL0oHUSIb9ToJsWa1wxqnjHcSlD9QPxklSSERM2hLjsu4svqAr22eyoi8JlkZnE_JOP8A8OaNHbGEz-ZowILKVnslnDZbPlAZAMjLcs_m8pzFHRiH7PA8wSrZVh9_LXNFVhVuo0J4LC77bt4CKVwH1ADw0A5t6DrKwQ2MF6-vhAloKg1qKLr5lJKWw82vjYmWvwmjyV5sLBZVCECaxF6kW-LXDLfND-oZwqL3FDOm" />
+                                    <img class="h-6" data-alt="Mastercard logo"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBetEyiEb0Bl_CmmDxG6hYZdyReV9-TYCWiz1ncrPIQi5UYNVcndlUDl8GbvLvDU6ToMC6wVwf9HNv_x9W7UpyJ0ouv8qdtAx02HpVrCj7Xb6MkTOxl_R1lrNGDSZP1Y5d0l0lwGsBJmw6zimrDcJ44vPU304QB2F8ehnkD3x_9TYX6FXfQKOt8g2uzYu40D7tbMcP9yYe5KFqJB7hw2ROlGEVoFrwfsfTcEo7SC55iSenyOD65U-UGC_AntioYW2oz40sHuSBex2lf" />
+                                </div>
+                            </div>
+                            <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-x-6 gap-y-6">
+                                <div class="sm:col-span-4">
+                                    <label class="flex flex-col w-full">
+                                        <p
+                                            class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                            Card Number</p>
+                                        <div class="relative">
+                                            <input
+                                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-background-dark h-12 placeholder:text-white/40 px-4 pl-12 text-sm font-normal leading-normal font-display"
+                                                placeholder="0000 0000 0000 0000" />
+                                            <span
+                                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/40">credit_card</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label class="flex flex-col w-full">
+                                        <p
+                                            class="text-white/90 font-display text-sm font-medium leading-normal pb-2">
+                                            Expiration Date</p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-background-dark h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                            placeholder="MM / YY" />
+                                    </label>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label class="flex flex-col w-full">
+                                        <p
+                                            class="text-white/90 font-display text-sm font-medium leading-normal pb-2 flex items-center gap-2">
+                                            CVC <span
+                                                class="material-symbols-outlined text-sm text-white/50 cursor-help"
+                                                title="3-digit security code on the back of your card">help</span>
+                                        </p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white/90 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-white/20 bg-background-dark h-12 placeholder:text-white/40 px-4 text-sm font-normal leading-normal font-display"
+                                            placeholder="123" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded-lg border border-white/20 p-5 bg-[#192633]/50">
+                            <label class="flex items-center justify-between cursor-pointer" for="paypal">
+                                <div class="flex items-center gap-4">
+                                    <input
+                                        class="form-radio h-4 w-4 bg-transparent border-white/40 text-primary focus:ring-primary"
+                                        id="paypal" name="paymentMethod" type="radio" />
+                                    <span
+                                        class="text-white/90 font-display text-sm font-medium">PayPal</span>
+                                </div>
+                                <img class="h-6" data-alt="PayPal accepted cards"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAt0Yv4ERzmhAgOG7_efq4fVIAxxgK1RLyEbi87jFbhuUZ00s9ju6fgFqjk1NtE2144lpM4XM9GE_FRRe0gCKFlPLxCSFOdv2Y5ZjlTgIM3P1bJlMof8TFZXrTgMDibBTZh0F_bXtHkkFF_0XBlUA7nDQqJNBYNwnUBJhcx0n5q_y3JpVq_6o1WWrvtv8y1DQx2DEEwmfmVUb0l5BkPg3L6hnUjebxi-AC6gNwn6QAvPwJuohYGLqP8O3lKBd1t9S8uTcTAbPvmgZp" />
+                            </label>
+                        </div>
+                        <div class="rounded-lg border border-white/20 p-5 bg-[#192633]/50">
+                            <label class="flex items-center justify-between cursor-pointer" for="crypto">
+                                <div class="flex items-center gap-4">
+                                    <input
+                                        class="form-radio h-4 w-4 bg-transparent border-white/40 text-primary focus:ring-primary"
+                                        id="crypto" name="paymentMethod" type="radio" />
+                                    <span
+                                        class="text-white/90 font-display text-sm font-medium">Crypto</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <img class="h-6" alt="Bitcoin logo"
+                                        src="https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white" />
+                                    <img class="h-6" alt="Ethereum logo"
+                                        src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" />
+                                </div>
+                            </label>
+                        </div>
+                        
+
+                    </div>
+                </section>
+            </div>
+            <!-- Right Side: Order Summary -->
+            <aside class="lg:col-span-1 w-full">
+                <div
+                    class="sticky top-10 bg-[#192633] rounded-xl border border-white/20 p-6 flex flex-col gap-6">
+                    <h3 class="text-white text-xl font-bold font-display tracking-tight">Order Summary</h3>
+                    <div class="flex flex-col gap-5">
+                        {% for cart in cart_items %}
+                        <div class="flex gap-4 items-center">
+                            <div class="w-16 h-24 rounded-md bg-cover bg-center flex-shrink-0"
+                                data-alt="Book cover for 'The Midnight Library'"
+                                style="background-image: url('{{ cart.book.cover_image.url }}')">
+                            </div>
+                            <div class="flex-grow">
+                                <p class="text-white font-display text-sm font-medium leading-normal">{{ cart.book.title }}</p>
+                                <p class="text-white/60 font-display text-xs">by {{ cart.book.author }}</p>
+                            </div>
+                            <p class="text-white font-display text-sm font-semibold">${{ cart.book.price }}</p>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="border-t border-white/20"></div>
+                    <div class="flex flex-col gap-3 text-sm">
+                        <div class="flex justify-between">
+                            <p class="text-white/60 font-display">Subtotal</p>
+                            <p class="text-white/90 font-display">${{ total_price }}</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <p class="text-white/60 font-display">Taxes</p>
+                            <p class="text-white/90 font-display">${{ tax }}</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-white/20"></div>
+                    <div class="flex justify-between items-baseline">
+                        <p class="text-white/90 font-display font-bold text-lg">Total</p>
+                        <p class="text-white font-display font-black text-2xl tracking-tight">${{ final_total }}</p>
+                    </div>
+                    <button
+                        class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-4 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] font-display hover:bg-primary/90 transition-colors">
+                        <span class="truncate">Complete Purchase</span>
+                    </button>
+                    <div class="flex items-center justify-center gap-2 text-xs text-white/50">
+                        <span class="material-symbols-outlined text-sm">lock</span>
+                        <span>All transactions are secure and encrypted</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <footer class="text-center py-10 mt-10 border-t border-white/10">
+        <p class="text-white/50 text-sm font-display">
+            <a class="hover:text-white/80" href="#">Privacy Policy</a> · <a class="hover:text-white/80"
+                href="#">Terms of Service</a>
+        </p>
+    </footer>
+</main>
+
+{% endblock %}

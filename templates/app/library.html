@@ -10,6 +10,7 @@
       <!-- <main class="px-10 py-8"> -->
         <section class="mb-12">
           <h2 class="text-slate-50 text-2xl font-bold leading-tight tracking-[-0.015em] mb-4">Currently Reading</h2>
+          {% if current_reading_book %}
           <div class="flex items-stretch justify-between gap-8 rounded-lg bg-card-dark p-6 border border-border-dark">
             <div class="flex flex-[2_2_0px] flex-col justify-between gap-4">
               <div>
@@ -31,10 +32,15 @@
               </a>
             </div>
             <div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover rounded-lg flex-1 max-w-xs"
-              data-alt="Book cover for The Midnight Library"
+              data-alt="Book cover for {{ current_reading_book.title }}"
               style='background-image: url("{{ current_reading_book.cover_image.url }}");'>
             </div>
           </div>
+          {% else %}
+          <div class="text-center py-10 rounded-lg bg-card-dark border border-border-dark">
+            <p class="text-slate-400">You are not currently reading any book.</p>
+          </div>
+          {% endif %}
         </section>
         <section class="px-8 py-8">
           <div class="flex justify-between items-center mb-4">

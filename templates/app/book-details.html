@@ -75,6 +75,7 @@
     const actionText = document.querySelector('[data-action-text]').getAttribute('data-action-text');
     const bookId = document.querySelector('[data-book-id]').getAttribute('data-book-id');
     const readBookEndpointTemplate = "{% url 'read-book' 0 %}?book_type=dtype";
+    const addToCartEndpointTemplate = "{% url 'add-to-cart' 0 %}";
 
     actionBtn.addEventListener('click', function() {
         if (actionText === 'Read now') {
@@ -95,7 +96,28 @@
             })
             
         } else {
-            actionBtn.textContent = 'Added to Cart';
+            actionBtn.textContent = 'Processing...';
+
+            const addToCartEndpoint = addToCartEndpointTemplate.replace('0', bookId);
+
+            fetch(addToCartEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    NotifyX.success(data.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                    actionBtn.textContent = 'Added to Cart';
+
+                }
+                else if (data.status === 'info') {
+                    NotifyX.info(data.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                    setTimeout(() => {
+                        actionBtn.textContent = 'Buy now';
+                    }, 3000);
+                }
+                else {
+                    NotifyX.error(data.message, { duration: 3000, dismissible: true, theme: 'dark' });
+                }
+            })
         }
     });
 </script>
