@@ -116,6 +116,7 @@
     const bookId = document.querySelectorAll('[data-book-id]');
     const readBookEndpointTemplate = "{% url 'read-book' 0 %}?book_type=dtype";
     const addToCartEndpointTemplate = "{% url 'add-to-cart' 0 %}";
+    const readPDFTemplate = "{% url 'pdf-viewer' 0 %}";
 
     actionBtn.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -124,13 +125,14 @@
             btn.textContent = 'Processing...';
 
             const readBookEndpoint = readBookEndpointTemplate.replace('0', btn.dataset.bookId).replace('dtype', 'free');
+            const readPDFUrl = readPDFTemplate.replace('0', btn.dataset.bookId);
 
             fetch(readBookEndpoint)
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Book added to your library successfully!') {
                     btn.textContent = 'Added to Library';
-                    window.location.href = data.open_book_url;
+                    window.location.href = readPDFUrl;
                 }
                 else {
                     NotifyX.warning(data.warning, { duration: 3000, dismissible: true, theme: 'dark' });
