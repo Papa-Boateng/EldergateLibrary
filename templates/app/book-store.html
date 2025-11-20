@@ -1,0 +1,316 @@
+{% extends 'layout.html' %}
+
+{% block title %}Book Details - Eldergate Library{% endblock %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+        <div class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-5">
+            <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+               
+                <div class="mb-6">
+                    <div class="relative">
+                        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
+                        <input class="w-full pl-10 pr-4 py-3 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark" placeholder="Search for books, journal articles and more..." type="text"/>
+                    </div>
+                </div>
+                    
+               
+                <main class="flex flex-col gap-8 md:gap-12 mt-8">
+                    <div class="@container">
+                        <div class="px-4">
+                            <div class="bg-cover bg-center flex flex-col justify-end overflow-hidden rounded-lg min-h-80"
+                                data-alt="A stylized image of a person reading a glowing book in a library"
+                                style='background-image: linear-gradient(0deg, rgba(16, 25, 34, 0.7) 0%, rgba(16, 25, 34, 0) 40%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBvrfmlukxG4A0CeYQRZ5TZ5shZRwIVx-4oGNgVPPo6qzlyQZSiF78Qqzl_wUqDeVQ23Z2BqooBF5_s2aTp0OqpCZHcDpAm0Jxm_FBNSp3ZypT0qF63Gq0VFJO2taLGCGI2LwXPUwrRnIjrnfVtM2-Bjf6IjQ51zWiKtaZgITaWiMzYhkvQeVrq8WY8ZiMU_QWS8DWOlufVx4pxdLYMYOxtqpOINse3yVezjiYiwIZIgz7lATdngmWiPpP2jannlWW-8eVGFlUBkckz");'>
+                                <div class="p-6 md:p-8">
+                                    <p
+                                        class="text-white tracking-tight text-3xl md:text-4xl font-bold leading-tight">
+                                        New York Times Bestsellers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section>
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3">
+                            Mystery</h2>
+                        <div
+                            class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+                            <div class="flex items-stretch p-4 gap-4">
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for The Silent Patient"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7TULv6PkK0EMRWeMcX52fnTToscM7dJSNT8sSxGxsZIvxsoDxeNslC_ZKCRiBak_tJt-E-AYDwy58zAfMcjbZTPac2N16Gx6D7meyfkJ4ejRO-HEf8cceS2kXYU9muV_dN-Szz96A7K0rmoauJOzG-6RGaiPnjIO1BI7yKNtMCecaL6OCzO3vqNQXDYPxC-RX8Akk9p_hUYq00dhh6tylTUC1AxXgpGXImRKJZYKSYqwcwFgl2P8A7V2nidhXvx3GfdYpkGIcQyZq");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">The Silent
+                                                Patient</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Alex
+                                                Michaelides</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Gone Girl"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4IYKkc7wNgAL6R1wMciUfsBG1t-sfC5lmf3a6tqixZLybM_LsQ-KDzRN5TEzmGBPSXQI7p0IflwRZyIMOBrCH9oZ_r9fAri4FpgaDcUNRpp_DYyyzwvWU0ZxlaAg8GMUNGqJBpE8A88bc3ePAUXOHVCzhkRNKQlfDJuNZTjRMwyDDjakntWiRzfXAseOJy2eVpimWNqTv45645-AdRyt5zK40Clg6C9KKQClrhQCqk834a29qgE_CoKwbtoolDxJgrx-HTnw8WuVt");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Gone Girl</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Gillian
+                                                Flynn</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for The Guest List"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWifSt6NYY7ojB5pyr2SoIHnamEfdJwCpJyxeFlmXKJEI2kK-45D4ufkBXKjh1-c3dd6Z22C1MtoOniwiFPjyeC-kry7nF4mDyG57OiNL0FYjpMHuivAsxShsrINJRyqGSidhXQjVuvJ4_7rr8WTsQGR2csdiRxtbKan2g4yJbhdQwmbzRlPuXbE6GZGO0AOpDgGEiSBzHqUeOG97fqvxOiNaU0NqPzPHzugM8-VmyDklcX0DKDxhGcN44l58SBSaGV0l7uYnPUAvL");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">The Guest
+                                                List</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Lucy Fokley
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Big Little Lies"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCieLL8Umkc-geAF0pBqQ4s8v-8kHZjsfY6SRMr7pQZgh8cFEsVitfFOe_3097V25oghEFIs1oNBJ-nzeuLpw6dKzevqLt4Jx5P4MUrIxxACvK4JUNgP2OSxiE9LPy7VOe__s5yNUJGKd-L58WkcpzxQdEvPp7hFvNm5aHyIUgpG5OkHjMxZg5N1hUeUaYp51zS87KMy_Bdyg4c8_7ORIaPYgx55xTgCxObuXgL2W1mArEicC7RkhzkkcvjIBuXet34jx_2rDr2fXo9");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Big Little
+                                                Lies</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Liane
+                                                Moriarty</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for A Good Girl's Guide to Murder"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0sZEKy2yKFOejX2DgvJVCKUZB-AHKi7zIwHwXdatQqQh8Z_dZpenvKRqA-qe2aKq5tPjgjI9Il2DtDvELd_Y1rVQVBtfqNJ51NBoKQbr0ODRlipJz06GNbg_njk_ZcYWWAvagmTZFiDFP6kBVUGZimHt9F3w6e2-Q3HZTzBc9DZ5D99hbllUKU9UIH2Od3PM4uk-I823mP5uEtK0AsmFuKaVdyiW_dTjbhTlN-9QwEnsjHv6xinCRAOhZIjQV3F5GlO2cI0F5xlAN");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">A Good Girl's
+                                                Guide to Murder</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Holly
+                                                Jackson</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3">
+                            Philosophy</h2>
+                        <div
+                            class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+                            <div class="flex items-stretch p-4 gap-4">
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Meditations"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkEXGuOfrZdXvQ41Mz3zjDotRMfkncmeHjxgezhBLIEa707cZMXoOCVts9b1w3FuLY6n-gS0NO1X3WI2xCvvCwh2ntLld-pN3WZG6RCJoL_P2u6R9Kd5Qpvr8V5S7WcC0yhe0P_4oCDXlfu7Itjme79-JXQGDlIB0T_RvpwhkCuim7DyLquAj3zKxzJxG5UMOKsFU_0THQ38oxP7FnAXw1pK1ENPGlxXCMvAI-ByjrCtLPO2L36uxQPiHYfeEEYAzelVrf_3pp7tOF");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Meditations
+                                            </p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Marcus
+                                                Aurelius</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for The Republic"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrDPkW00sIIzNwRgUHg5B9RLRlsOE9C7JdpMYi4CxZGF_jkJB3QZHmVxBVwCQchj06jCOco6BWCKpsNo5elPsBgbD7Zqp1DAXElgSuhazvVkXWTVDvyodBeg1evAVggLCvtGWS-sATQe7m_afwN3xezOYz65E9jKIuQrOI7dS1rRSAl9GUkSI090Yhr_i8G1kXLvK_UGxiS2CZBp8Iqq_OhiqIObtGQKMZF0BF0Y0Nx0SRZsiiEnIJ-9J11XjfjQb6r-fwn-N1qWxe");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">The Republic
+                                            </p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Plato</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Sapiens: A Brief History of Humankind"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7NA7CUW_8_vBhqFDzVWZiv8IPm5sIGUR_i9T0qvF-mU-v2AcJZTikixytsxXjrT1Kr_atOL-odvS9dqGc_vXXCoplunOFYf7EJ87-aq4yHATvj03X3sIaAQouTQK5Zwt_KH9eel6a06K14255Ola2Ne3ogQIeDS9GBIi0JzCXbs2lU9gG_8c3ORP5bR6AmIX_2YK4vgiQzBQBL_9aqNvfGwADa6AwwvZLWNaYgQWJfRTqdFxsHnhnpfq9glvGKflnhZZApmRjwmm5");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Sapiens</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Yuval Noah
+                                                Harari</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Man's Search for Meaning"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALWsaSqeF_Sx-dDqawLmkdB5lmvCzih014TvGX0m0Oawrq5dvF96q_u9QbUvKX-Mc0sYAOfRTHtkZWjdRvlOR-M1Yr8GLUIdPdkvse7mLljRZPaHn6QbNtkYgbATDmLplrsMkeGQPgzz_jWsCV2-DlQQeHeJfiBqPVwc9jss5ayLVMLFFcegY9PCWWJmI4cxCRf7u9JbdzRfaTMVeDAmoNVtG-UutOMLlxTn-VP_WWm5RLdvm25Alg2VkzOk4QngLr-NRAoxQ8lJqq");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Man's Search
+                                                for Meaning</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Viktor E.
+                                                Frankl</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for The Daily Stoic"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdZ6Z2XiFckKL2XoY9bbTAanHWVjlAWmhFHFH_a8MCHsWKhty1LFNXgFzT-lliJ5auRsor6A8avkh5O8J_EQF4dWx0eCw9_kaOkQcPhgzERH32NzrODfljUaADVZ_g3weDqn7OS3i-rosPRKhe2eEvQtaoaNnuIxLb5fsF_P-Dm2LynvPPbTeu5KEg8dfqqUKXPF0TFV0jNmdbNGZU5kW0jBt44Udd0GszNWLGYKGoz9w9VwAWOarDLbDGYHSB_vDkXla19KBSKNpk");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">The Daily
+                                                Stoic</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Ryan Holiday
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3">
+                            History</h2>
+                        <div
+                            class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+                            <div class="flex items-stretch p-4 gap-4">
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for Guns, Germs, and Steel"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcUU5Lmbd_l_tUy88Z6OgczB9gGSffPktC9DsMTrpf9vf9TWmLveuP8s4d3OCMYVdSeKLXsl0oEA3wPoqrlE55LGs2wr3JhIvZFs6X6W7G2MYXNO-ZRfEFxj-i5DpCGr8rE0Derv1MoBB0TCEd0tHRTnMFkVZe6U9JhMfSdBFB6WiJFjmMFj0_td-VoF1RexO4KCoaAl8J0bPfje_3IzyzHeOj96uz_ylk90G7on04IAOA8u1-t2jNIWgbuUgXC7FE2Sks68YxxDVa");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">Guns, Germs,
+                                                and Steel</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">Jared
+                                                Diamond</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for The Wright Brothers"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUH5auouwQcJ1FAzQ8qhi32Mzpvz_4_82o3WTC1g5cHMKF2oWaKWFm_7hM1jKkGikm6jpw-AjtUJDIn5Dp7MH12jQy--z24OBQ_webr-gFHCgMuBRnTutdtk_JzRKZnkDh6paoNZrW5hWI2TXo_j13IUqD4-y1KRZRwU-OKsNtzxJ7IdvBRaWw2Yq4_IBRktViyd9lI2jEvlRP-yeVoDhR_yzndbcD5I436gG5RTWBxl-8ESCyAgRMLyPnuf41id1_VYK1YoYT3OIQ");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">The Wright
+                                                Brothers</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">David
+                                                McCullough</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/5 shadow-[0_0_4px_rgba(0,0,0,0.1)] w-52 md:w-60">
+                                    <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-t-lg flex flex-col"
+                                        data-alt="Book cover for 1776"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtgEa13ujuXuhRB--QG3Htkyk9Apttb9skR_We3KG3l6QUVv61yDU6oSsl2HKD8qNJsK2pP9FTgA_ZEiQaFV3nJ-KzZRnID51fm7txf1KLdL_D_B_yCeOYkwfr2vrK59269s6oJIijkTlU-7EYFp53Tn0R1Or_v-80xYnECQbluiKJoeoxQljfgvx25oTKIkruLBye1l2Iq0ikSVxHQtG_TbEXse4OKINYOXLtpRFDCh_pDHEVZ3ErNMST4ihCkizN0OaukwgjfO4i");'>
+                                    </div>
+                                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                                        <div>
+                                            <p class="text-white text-base font-medium leading-normal">1776</p>
+                                            <p class="text-white/60 text-sm font-normal leading-normal">David
+                                                McCullough</p>
+                                        </div>
+                                        <button
+                                            class="flex min-w-[84px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"><span
+                                                class="truncate">View Details</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+                <footer
+                    class="flex items-center justify-between mt-16 py-8 border-t border-solid border-white/10 text-white/60 text-sm">
+                    <div class="flex items-center gap-2">
+                        <div class="size-4 text-primary">
+                            <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z"
+                                    fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <span>© 2024 Eldergate. All Rights Reserved.</span>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <a class="hover:text-white transition-colors" href="#">About Us</a>
+                        <a class="hover:text-white transition-colors" href="#">Help</a>
+                        <a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
