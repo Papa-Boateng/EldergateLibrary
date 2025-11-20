@@ -6,17 +6,17 @@
 
 {% include 'includes/header.html' %}
 
-<div class="mb-6">
+<!-- <div class="mb-6">
     <div class="relative">
         <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
         <input class="w-full pl-10 pr-4 py-3 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark focus:ring-primary focus:border-primary text-text-light dark:text-text-dark" placeholder="Search for books, journal articles and more..." type="text"/>
     </div>
-</div>
+</div> -->
 <section class="mb-8">
     <div class="flex items-center justify-between mb-4">
         <div class="flex space-x-6 border-b border-border-light dark:border-border-dark">
             <button class="pb-2 border-b-2 border-primary text-primary font-semibold">Recommended</button>
-            <button class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">Store</button>
+            <a href="{% url 'book-store' %}" class="pb-2 text-subtext-light dark:text-subtext-dark hover:text-primary">Store</a>
         </div>
         <div class="flex items-center space-x-2">
             <span class="text-subtext-light dark:text-subtext-dark">Category</span>

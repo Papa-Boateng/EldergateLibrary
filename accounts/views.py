@@ -71,6 +71,14 @@ def dashboard_view(request):
         return render(request, 'app/dashboard.html', {'user': user, 'title': title, 'subtitle': subtitle, 'filter_category': filter_category, 'trending_books_data': trending_books_data})
     else:
         return redirect('login')
+###Book store view
+def book_store_view(request):
+    if request.session.get('is_authenticated'):
+        user = request.user
+        return render(request, 'app/book-store.html', {'user': user})
+    else:
+        return redirect('login')
+
 def library_view(request):
     if request.session.get('is_authenticated'):
         user = request.user

@@ -76,22 +76,24 @@
     const bookId = document.querySelector('[data-book-id]').getAttribute('data-book-id');
     const readBookEndpointTemplate = "{% url 'read-book' 0 %}?book_type=dtype";
     const addToCartEndpointTemplate = "{% url 'add-to-cart' 0 %}";
+    const readPDFTemplate = "{% url 'pdf-viewer' 0 %}";
 
     actionBtn.addEventListener('click', function() {
         if (actionText === 'Read now') {
             actionBtn.textContent = 'Processing...';
 
             const readBookEndpoint = readBookEndpointTemplate.replace('0', bookId).replace('dtype', 'free');
+            const readPDFUrl = readPDFTemplate.replace('0', bookId);
 
             fetch(readBookEndpoint)
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Book added to your library successfully!') {
                     actionBtn.textContent = 'Added to Library';
-                    window.location.href = data.open_book_url;
+                    window.location.href = readPDFUrl;
                 }
                 else {
-                    NotifyX.warning(data.error, { duration: 3000, dismissible: true, theme: 'dark' });
+                    NotifyX.warning(data.warning, { duration: 3000, dismissible: true, theme: 'dark' });
                 }
             })
             
